@@ -3,15 +3,12 @@ package com.jiro.model;
 import com.jiro.enums.CardNumber;
 import com.jiro.enums.CardSuit;
 
-/**
- * Created by dev-pc on 5/23/16.
- */
 public class Card {
 
     private CardSuit cardSuit;
     private CardNumber cardNumber;
-    private Player player;
     private boolean isVisible;
+    private Deck deck;
 
     public CardSuit getCardSuit() {
         return cardSuit;
@@ -29,14 +26,6 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public boolean isVisible() {
         return isVisible;
     }
@@ -50,6 +39,14 @@ public class Card {
     public Card(CardNumber cardNumber, CardSuit cardSuit) {
         this.cardNumber = cardNumber;
         this.cardSuit = cardSuit;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
     }
 
     @Override

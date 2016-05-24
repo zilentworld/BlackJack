@@ -1,38 +1,29 @@
 package com.jiro.model;
 
-import com.jiro.enums.Chip;
-
+import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by dev-pc on 5/23/16.
- */
+@Entity
+@Table(name = "room")
 public class Room {
 
+    @Id
+    @Column(name = "room_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roomId;
-    private Deck deck;
-    private Deck discardDeck;
+
+    @OneToOne
+    @JoinColumn(name = "dealer_id")
     private Dealer dealer;
-    private int bet;
-    private Map<Chip, Integer> chipBets;
+
+    @OneToMany
+
     private List<Player> playerList;
 
-    public Deck getDeck() {
-        return deck;
-    }
-
-    public void setDeck(Deck deck) {
-        this.deck = deck;
-    }
-
-    public Deck getDiscardDeck() {
-        return discardDeck;
-    }
-
-    public void setDiscardDeck(Deck discardDeck) {
-        this.discardDeck = discardDeck;
-    }
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private Game game;
 
     public Dealer getDealer() {
         return dealer;
@@ -40,14 +31,6 @@ public class Room {
 
     public void setDealer(Dealer dealer) {
         this.dealer = dealer;
-    }
-
-    public int getBet() {
-        return bet;
-    }
-
-    public void setBet(int bet) {
-        this.bet = bet;
     }
 
     public List<Player> getPlayerList() {
@@ -66,11 +49,11 @@ public class Room {
         this.roomId = roomId;
     }
 
-    public Map<Chip, Integer> getChipBets() {
-        return chipBets;
+    public Game getGame() {
+        return game;
     }
 
-    public void setChipBets(Map<Chip, Integer> chipBets) {
-        this.chipBets = chipBets;
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

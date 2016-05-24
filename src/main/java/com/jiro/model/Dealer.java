@@ -1,7 +1,44 @@
 package com.jiro.model;
 
-/**
- * Created by dev-pc on 5/24/16.
- */
-public class Dealer {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "dealer")
+public class Dealer implements Serializable{
+
+    @Id
+    @Column(name = "dealer_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long dealerId;
+
+    @Column(name = "dealer_username")
+    private String dealerUsername;
+
+    @Column(name = "dealer_password")
+    private String dealerPassword;
+
+    public long getDealerId() {
+        return dealerId;
+    }
+
+    public void setDealerId(long dealerId) {
+        this.dealerId = dealerId;
+    }
+
+    public String getDealerUsername() {
+        return dealerUsername;
+    }
+
+    public void setDealerUsername(String dealerUsername) {
+        this.dealerUsername = dealerUsername;
+    }
+
+    public String getDealerPassword() {
+        return dealerPassword;
+    }
+
+    public void setDealerPassword(String dealerPassword) {
+        this.dealerPassword = dealerPassword;
+    }
 }

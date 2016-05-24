@@ -4,55 +4,23 @@ import com.jiro.enums.CardNumber;
 import com.jiro.enums.CardSuit;
 import com.jiro.model.Card;
 import com.jiro.model.Deck;
-import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Set;
 
-@Service
-public class DeckService {
+public interface DeckService {
 
-    public void populateDeck(Deck deck) {
-        Set<CardNumber> cardNumberSet = EnumSet.allOf(CardNumber.class);
-        Set<CardSuit> cardSuitSet = EnumSet.allOf(CardSuit.class);
-        for (int ctr = deck.getDeckSize(); ctr > 0; ctr--) {
-            cardSuitSet.forEach(cardSuit ->
-                    cardNumberSet.forEach(cardNumber ->
-                            deck.getCardList().add(new Card(cardNumber, cardSuit))
-                    )
-            );
-        }
-    }
+    void populateDeck(Deck deck);
 
-    public Set<Card> populateSuit(CardSuit cardSuit, Set<CardNumber> cardNumberSet) {
-        Set<Card> cardSet = new HashSet<>();
-        cardNumberSet.forEach(cardNumber -> cardSet.add(new Card(cardNumber, cardSuit)));
+    Set<Card> populateSuit(CardSuit cardSuit, Set<CardNumber> cardNumberSet);
 
-        return cardSet;
-    }
+    Set<Card> populateNumber(CardNumber cardNumber, Set<CardSuit> cardSuitSet);
 
-    public Set<Card> populateNumber(CardNumber cardNumber, Set<CardSuit> cardSuitSet) {
-        Set<Card> cardSet = new HashSet<>();
-        cardSuitSet.forEach(cardSuit -> cardSet.add(new Card(cardNumber, cardSuit)));
+    void shuffleDeck(Deck deck);
 
-        return cardSet;
-    }
+    void removeCard(Deck deck, int index);
 
-    public void shuffleDeck (Deck deck) {
-        long seed = System.nanoTime();
-        Collections.shuffle(deck.getCardList(), new Random(seed));
-    }
+    void addCard(Deck deck, Card card);
 
-    public void removeCard (Deck deck, int index) {
-        deck.getCardList().remove(index);
-    }
-
-    public void addCard (Deck deck, Card card) {
-        deck.getCardList().add(card);
-    }
-
-    public Card getCard (Deck deck) {
-        LinkedList<Card> cardList = (LinkedList<Card>) deck.getCardList();
-        return cardList.pop();
-    }
+    Card getCard(Deck deck);
 
 }

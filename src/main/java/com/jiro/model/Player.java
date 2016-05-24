@@ -1,14 +1,32 @@
 package com.jiro.model;
 
-/**
- * Created by dev-pc on 5/23/16.
- */
-public class Player {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
+@Entity
+@Table(name = "player")
+public class Player implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "player_id")
     private long playerId;
-    private CardHand cardHand;
-    private ChipBank chipBank;
-    private int bet;
+
+    @Column(name = "player_username")
+    private String playerUsername;
+
+    @Column(name = "player_password")
+    private String playerPassword;
+
+    @Transient
+    private List<PlayerHand> playerHandList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player", fetch = FetchType.LAZY)
+    private List<PlayerChipStack> playerChipStackList;
+
+    @Column(name = "total_chip_amount")
+    private int totalChipAmount;
 
     public long getPlayerId() {
         return playerId;
@@ -18,30 +36,47 @@ public class Player {
         this.playerId = playerId;
     }
 
-    public ChipBank getChipBank() {
-        return chipBank;
+    public String getPlayerUsername() {
+        return playerUsername;
     }
 
-    public void setChipBank(ChipBank chipBank) {
-        this.chipBank = chipBank;
+    public void setPlayerUsername(String playerUsername) {
+        this.playerUsername = playerUsername;
     }
 
-    public int getBet() {
-        return bet;
+    public String getPlayerPassword() {
+        return playerPassword;
     }
 
-    public void setBet(int bet) {
-        this.bet = bet;
+    public void setPlayerPassword(String playerPassword) {
+        this.playerPassword = playerPassword;
     }
 
-    public CardHand getCardHand() {
-        return cardHand;
+    public List<PlayerChipStack> getPlayerChipStackList() {
+        return playerChipStackList;
     }
 
-    public void setCardHand(CardHand cardHand) {
-        this.cardHand = cardHand;
+    public void setPlayerChipStackList(List<PlayerChipStack> playerChipStackList) {
+        this.playerChipStackList = playerChipStackList;
     }
 
-    public Player(){}
+    public List<PlayerHand> getPlayerHandList() {
+        return playerHandList;
+    }
+
+    public void setPlayerHandList(List<PlayerHand> playerHandList) {
+        this.playerHandList = playerHandList;
+    }
+
+    public int getTotalChipAmount() {
+        return totalChipAmount;
+    }
+
+    public void setTotalChipAmount(int totalChipAmount) {
+        this.totalChipAmount = totalChipAmount;
+    }
+
+    public Player() {
+    }
 
 }

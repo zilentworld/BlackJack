@@ -3,13 +3,19 @@ package com.jiro.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dev-pc on 5/23/16.
- */
 public class Deck {
 
+    private Game game;
     private int deckSize;
     private List<Card> cardList;
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
     public int getDeckSize() {
         return deckSize;
@@ -28,5 +34,12 @@ public class Deck {
 
     public void setCardList(List<Card> cardList) {
         this.cardList = cardList;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        cardList.forEach(card -> sb.append(card + "\n"));
+        return sb.toString();
     }
 }

@@ -2,12 +2,18 @@ package com.jiro.model;
 
 import java.util.List;
 
-/**
- * Created by dev-pc on 5/23/16.
- */
-public class CardHand {
+public class DealerHand {
 
+    private Dealer dealer;
     private List<Card> cardHand;
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(Dealer dealer) {
+        this.dealer = dealer;
+    }
 
     public List<Card> getCardHand() {
         return cardHand;
