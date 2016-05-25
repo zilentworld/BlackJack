@@ -11,10 +11,11 @@ public enum BlackJackEvent {
     STAND("stand", PLAYER_EVENT),
     DOUBLE("double", PLAYER_EVENT),
     SPLIT("split", PLAYER_EVENT),
-    BLACKJACK("blackjack", PLAYER_EVENT),
+    BET("bet", PLAYER_EVENT),
 
     DEALER_HIT("dealer_hit", DEALER_EVENT),
 
+    BLACKJACK("blackjack", WIN_EVENT),
     DEALER_BLACKJACK("dealer_blackjack", WIN_EVENT),
     PUSH("push", WIN_EVENT),
     PLAYER_LOSE("player_lose", WIN_EVENT),

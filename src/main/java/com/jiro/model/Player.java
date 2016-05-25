@@ -6,18 +6,22 @@ import java.util.List;
 
 @Entity
 @Table(name = "player")
-public class Player implements Serializable {
+@AttributeOverrides({
+        @AttributeOverride(name = "username", column = @Column(name="player_username")),
+        @AttributeOverride(name = "password", column = @Column(name="player_password"))
+})
+public class Player extends Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "player_id")
     private long playerId;
 
-    @Column(name = "player_username")
-    private String playerUsername;
-
-    @Column(name = "player_password")
-    private String playerPassword;
+//    @Column(name = "player_username")
+//    private String playerUsername;
+//
+//    @Column(name = "player_password")
+//    private String playerPassword;
 
     @Transient
     private List<PlayerHand> playerHandList;
@@ -36,21 +40,21 @@ public class Player implements Serializable {
         this.playerId = playerId;
     }
 
-    public String getPlayerUsername() {
-        return playerUsername;
-    }
-
-    public void setPlayerUsername(String playerUsername) {
-        this.playerUsername = playerUsername;
-    }
-
-    public String getPlayerPassword() {
-        return playerPassword;
-    }
-
-    public void setPlayerPassword(String playerPassword) {
-        this.playerPassword = playerPassword;
-    }
+//    public String getPlayerUsername() {
+//        return playerUsername;
+//    }
+//
+//    public void setPlayerUsername(String playerUsername) {
+//        this.playerUsername = playerUsername;
+//    }
+//
+//    public String getPlayerPassword() {
+//        return playerPassword;
+//    }
+//
+//    public void setPlayerPassword(String playerPassword) {
+//        this.playerPassword = playerPassword;
+//    }
 
     public List<PlayerChipStack> getPlayerChipStackList() {
         return playerChipStackList;
@@ -77,6 +81,10 @@ public class Player implements Serializable {
     }
 
     public Player() {
+    }
+
+    public Player(long playerId) {
+        this.playerId = playerId;
     }
 
 }

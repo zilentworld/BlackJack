@@ -1,6 +1,7 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "game")
@@ -19,6 +20,17 @@ public class Game {
 
     @Transient
     private Deck discardDeck;
+
+    @Transient
+    private List<Player> playerList;
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
+    }
 
     public long getGameId() {
         return gameId;

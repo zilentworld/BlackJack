@@ -51,9 +51,12 @@ public class DeckServiceImpl implements DeckService {
         deck.getCardList().add(card);
     }
 
-    public Card getCard (Deck deck) {
+    public Card getCard (Deck deck, boolean isVisible) {
         LinkedList<Card> cardList = (LinkedList<Card>) deck.getCardList();
-        return cardList.pop();
+        Card card = cardList.pop();
+        card.setVisible(isVisible);
+
+        return card;
     }
 
 }

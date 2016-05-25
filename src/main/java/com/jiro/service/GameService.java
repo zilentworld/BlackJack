@@ -7,6 +7,6 @@ public interface GameService {
 
     Game createNewGame(Room room);
 
-    void newRound(Game game);
+    void startRound(Game game);
 
 }

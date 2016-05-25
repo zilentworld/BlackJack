@@ -17,8 +17,7 @@ public class Room {
     @JoinColumn(name = "dealer_id")
     private Dealer dealer;
 
-    @OneToMany
-
+    @Transient
     private List<Player> playerList;
 
     @OneToOne

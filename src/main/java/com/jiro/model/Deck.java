@@ -1,6 +1,6 @@
 package com.jiro.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Deck {
@@ -27,7 +27,7 @@ public class Deck {
 
     public List<Card> getCardList() {
         if(cardList == null)
-            cardList = new ArrayList<>();
+            cardList = new LinkedList<>();
 
         return cardList;
     }

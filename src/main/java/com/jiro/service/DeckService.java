@@ -21,6 +21,6 @@ public interface DeckService {
 
     void addCard(Deck deck, Card card);
 
-    Card getCard(Deck deck);
+    Card getCard(Deck deck, boolean isVisible);
 
 }

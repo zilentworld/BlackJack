@@ -1,5 +1,6 @@
 package com.jiro.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,9 @@ public class PlayerHand {
     }
 
     public List<Card> getCardHand() {
+        if(cardHand == null) {
+            cardHand = new ArrayList<>();
+        }
         return cardHand;
     }
 
@@ -33,5 +37,12 @@ public class PlayerHand {
 
     public void setBet(Bet bet) {
         this.bet = bet;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        cardHand.forEach(card -> sb.append(card + "\n"));
+        return sb.toString();
     }
 }

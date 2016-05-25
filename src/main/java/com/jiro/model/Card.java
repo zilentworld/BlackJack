@@ -41,6 +41,12 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
+    public Card(CardNumber cardNumber, CardSuit cardSuit, boolean isVisible) {
+        this.cardNumber = cardNumber;
+        this.cardSuit = cardSuit;
+        this.isVisible = isVisible;
+    }
+
     public Deck getDeck() {
         return deck;
     }
@@ -51,6 +57,9 @@ public class Card {
 
     @Override
     public String toString() {
-        return cardNumber.getSymbol() + cardSuit.getSymbol();
+        if(isVisible)
+            return cardNumber.getSymbol() + cardSuit.getSymbol();
+        else
+            return "??";
     }
 }
