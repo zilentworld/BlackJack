@@ -26,8 +26,8 @@ public class Player extends Account implements Serializable {
     @Transient
     private List<PlayerHand> playerHandList;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player", fetch = FetchType.LAZY)
-    private List<PlayerChipStack> playerChipStackList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player", fetch = FetchType.LAZY)
+//    private List<PlayerChipStack> playerChipStackList;
 
     @Column(name = "total_chip_amount")
     private int totalChipAmount;
@@ -56,13 +56,13 @@ public class Player extends Account implements Serializable {
 //        this.playerPassword = playerPassword;
 //    }
 
-    public List<PlayerChipStack> getPlayerChipStackList() {
-        return playerChipStackList;
-    }
-
-    public void setPlayerChipStackList(List<PlayerChipStack> playerChipStackList) {
-        this.playerChipStackList = playerChipStackList;
-    }
+//    public List<PlayerChipStack> getPlayerChipStackList() {
+//        return playerChipStackList;
+//    }
+//
+//    public void setPlayerChipStackList(List<PlayerChipStack> playerChipStackList) {
+//        this.playerChipStackList = playerChipStackList;
+//    }
 
     public List<PlayerHand> getPlayerHandList() {
         return playerHandList;

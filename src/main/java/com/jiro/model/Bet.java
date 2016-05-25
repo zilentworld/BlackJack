@@ -19,8 +19,8 @@ public class Bet implements Serializable {
     @Column(name = "bet_amount")
     private int betAmount;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bet", fetch = FetchType.LAZY)
-    private List<BetChipStack> betChipStackList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bet", fetch = FetchType.LAZY)
+//    private List<BetChipStack> betChipStackList;
 
     public long getBetId() {
         return betId;
@@ -38,11 +38,11 @@ public class Bet implements Serializable {
         this.betAmount = betAmount;
     }
 
-    public List<BetChipStack> getBetChipStackList() {
-        return betChipStackList;
-    }
-
-    public void setBetChipStackList(List<BetChipStack> betChipStackList) {
-        this.betChipStackList = betChipStackList;
-    }
+//    public List<BetChipStack> getBetChipStackList() {
+//        return betChipStackList;
+//    }
+//
+//    public void setBetChipStackList(List<BetChipStack> betChipStackList) {
+//        this.betChipStackList = betChipStackList;
+//    }
 }
