@@ -19,21 +19,25 @@ public class ChipServiceImpl implements ChipService {
 
     @Override
     public Chip getById(long chipId) {
-        return chipDao.getById(chipId);
+//        return chipDao.getById(chipId);
+        return null;
     }
 
     @Override
     public Chip getByChipAmount(int chipAmount) {
-        return chipDao.getByChipAmount(chipAmount);
+//        return chipDao.getByChipAmount(chipAmount);
+        return null;
     }
 
     @Override
     public Chip getByChipDesc(String chipDesc) {
-        return chipDao.getByChipDesc(chipDesc);
+//        return chipDao.getByChipDesc(chipDesc);
+        return null;
     }
 
     @Override
     public List<Chip> getList() {
-        return chipDao.getList();
+//        return chipDao.getList();
+        return null;
     }
 }
