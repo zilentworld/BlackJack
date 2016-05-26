@@ -5,22 +5,24 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "dealer")
-@AttributeOverrides({
-        @AttributeOverride(name = "username", column = @Column(name="player_username")),
-        @AttributeOverride(name = "password", column = @Column(name="player_password"))
-})
-public class Dealer extends Account implements Serializable{
+//@AttributeOverrides({
+//        @AttributeOverride(name = "username", column = @Column(name="player_username")),
+//        @AttributeOverride(name = "password", column = @Column(name="player_password"))
+//})
+public class Dealer
+        //extends Account
+        implements Serializable{
 
     @Id
     @Column(name = "dealer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long dealerId;
 
-//    @Column(name = "dealer_username")
-//    private String dealerUsername;
-//
-//    @Column(name = "dealer_password")
-//    private String dealerPassword;
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
 
     @Transient
     private DealerHand dealerHand;
@@ -44,19 +46,19 @@ public class Dealer extends Account implements Serializable{
         this.dealerId = dealerId;
     }
 
-//    public String getDealerUsername() {
-//        return dealerUsername;
-//    }
-//
-//    public void setDealerUsername(String dealerUsername) {
-//        this.dealerUsername = dealerUsername;
-//    }
-//
-//    public String getDealerPassword() {
-//        return dealerPassword;
-//    }
-//
-//    public void setDealerPassword(String dealerPassword) {
-//        this.dealerPassword = dealerPassword;
-//    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
