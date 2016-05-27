@@ -11,7 +11,7 @@ import java.util.List;
 //        @AttributeOverride(name = "password", column = @Column(name="player_password"))
 //})
 public class Player
-//        extends Account
+        extends Account
         implements Serializable {
 
     @Id
@@ -19,11 +19,11 @@ public class Player
     @Column(name = "player_id")
     private long playerId;
 
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "password")
-    private String password;
+//    @Column(name = "username")
+//    private String username;
+//
+//    @Column(name = "password")
+//    private String password;
 
     @Transient
     private List<PlayerHand> playerHandList;
@@ -42,21 +42,21 @@ public class Player
         this.playerId = playerId;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     /*public List<PlayerChipStack> getPlayerChipStackList() {
         return playerChipStackList;
@@ -90,14 +90,20 @@ public class Player
     }
 
     public Player(String username, String password) {
-        this.username = username;
-        this.password = password;
+        setUsername(username);
+        setPassword(password);
+//        this.username = username;
+//        this.password = password;
     }
 
     @Override
     public String toString() {
+//        return "Player ID:"+ playerId + "\n" +
+//               "Username:" + username + "\n" +
+//               "Password:" + password;
+
         return "Player ID:"+ playerId + "\n" +
-               "Username:" + username + "\n" +
-               "Password:" + password;
+               "Username:" + getUsername() + "\n" +
+               "Password:" + getPassword();
     }
 }

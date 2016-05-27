@@ -10,7 +10,7 @@ import java.io.Serializable;
 //        @AttributeOverride(name = "password", column = @Column(name="player_password"))
 //})
 public class Dealer
-        //extends Account
+        extends Account
         implements Serializable{
 
     @Id
@@ -18,11 +18,11 @@ public class Dealer
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long dealerId;
 
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "password")
-    private String password;
+//    @Column(name = "username")
+//    private String username;
+//
+//    @Column(name = "password")
+//    private String password;
 
     @Transient
     private DealerHand dealerHand;
@@ -46,19 +46,19 @@ public class Dealer
         this.dealerId = dealerId;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 }

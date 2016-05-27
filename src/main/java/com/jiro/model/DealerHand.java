@@ -6,7 +6,8 @@ import java.util.List;
 public class DealerHand {
 
     private Dealer dealer;
-    private List<Card> cardHand;
+//    private List<Card> cardHand;
+    private CardHand cardHand;
 
     public Dealer getDealer() {
         return dealer;
@@ -16,21 +17,30 @@ public class DealerHand {
         this.dealer = dealer;
     }
 
-    public List<Card> getCardHand() {
-        if(cardHand == null) {
-            cardHand = new ArrayList<>();
-        }
+//    public List<Card> getCardHand() {
+//        if(cardHand == null) {
+//            cardHand = new ArrayList<>();
+//        }
+//        return cardHand;
+//    }
+//
+//    public void setCardHand(List<Card> cardHand) {
+//        this.cardHand = cardHand;
+//    }
+
+
+    public CardHand getCardHand() {
         return cardHand;
     }
 
-    public void setCardHand(List<Card> cardHand) {
+    public void setCardHand(CardHand cardHand) {
         this.cardHand = cardHand;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        cardHand.forEach(card -> sb.append(card + "\n"));
+        cardHand.getCardHand().forEach(card -> sb.append(card + "\n"));
         return sb.toString();
     }
 }

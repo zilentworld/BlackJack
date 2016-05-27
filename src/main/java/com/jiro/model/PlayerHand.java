@@ -9,7 +9,8 @@ import java.util.List;
 public class PlayerHand {
 
     private Player player;
-    private List<Card> cardHand;
+//    private List<Card> cardHand;
+    private CardHand cardHand;
     private Bet bet;
 
     public Player getPlayer() {
@@ -20,14 +21,23 @@ public class PlayerHand {
         this.player = player;
     }
 
-    public List<Card> getCardHand() {
-        if(cardHand == null) {
-            cardHand = new ArrayList<>();
-        }
+//    public List<Card> getCardHand() {
+//        if(cardHand == null) {
+//            cardHand = new ArrayList<>();
+//        }
+//        return cardHand;
+//    }
+//
+//    public void setCardHand(List<Card> cardHand) {
+//        this.cardHand = cardHand;
+//    }
+
+
+    public CardHand getCardHand() {
         return cardHand;
     }
 
-    public void setCardHand(List<Card> cardHand) {
+    public void setCardHand(CardHand cardHand) {
         this.cardHand = cardHand;
     }
 
@@ -42,7 +52,7 @@ public class PlayerHand {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        cardHand.forEach(card -> sb.append(card + "\n"));
+        cardHand.getCardHand().forEach(card -> sb.append(card + "\n"));
         return sb.toString();
     }
 }
