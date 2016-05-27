@@ -4,7 +4,7 @@ package com.jiro.enums;
  * Created by dev-pc on 5/23/16.
  */
 public enum CardNumber {
-    ACE("ace", "A", 1, 10),
+    ACE("ace", "A", 1, 11),
     TWO("two", "2", 2, 2),
     THREE("three", "3", 3, 3),
     FOUR("four", "4", 4, 4),
