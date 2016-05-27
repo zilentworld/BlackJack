@@ -13,13 +13,13 @@
        xmlns:tx="http://www.springframework.org/schema/tx">
 
     <!-- 	settings -->
-    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
-    <!--<tx:annotation-driven proxy-target-class="true"/>-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven proxy-target-class="true"/>
 
     <!--<jpa:repositories base-package="com.jiro.dao"/>-->
 
-    <!--<context:annotation-config/>-->
-    <!--<context:component-scan base-package="com.jiro"/>-->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.jiro"/>
 
     <!--&lt;!&ndash;abstract="false"&ndash;&gt;-->
     <!--&lt;!&ndash;autowire="default"&ndash;&gt;-->
@@ -47,5 +47,12 @@
             <!--</props>-->
         <!--</property>-->
     <!--</bean>-->
-
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <!-- does not necessarily have to be the same name as the bean to be exported -->
+        <property name="serviceName" value="PlayerService"/>
+        <property name="service" ref="playerServiceImpl"/>
+        <property name="serviceInterface" value="com.jiro.service.PlayerService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
 </beans>
