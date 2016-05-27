@@ -43,23 +43,28 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void startRound(Game game) {
+        System.out.println("Start game:"+game.getGameId());
         game.setPlayerList(game.getRoom().getPlayerList());
         distributeInitialCards(game);
     }
 
     private void distributeInitialCards(Game game) {
-        Deck playDeck = game.getPlayDeck();
-        Dealer dealer = game.getRoom().getDealer();
-        List<Player> playerList = game.getRoom().getPlayerList();
-        game.setPlayerList(playerList);
-        playersGeTCard(playerList, playDeck);
-        dealer.getDealerHand().getCardHand().add(deckService.getCard(playDeck, false));
-        playersGeTCard(playerList, playDeck);
-        dealer.getDealerHand().getCardHand().add(deckService.getCard(playDeck, true));
+//        Deck playDeck = game.getPlayDeck();
+//        Dealer dealer = game.getRoom().getDealer();
+//        List<Player> playerList = game.getRoom().getPlayerList();
+//        game.setPlayerList(playerList);
+//
+//        //1st card, with dealer card face down
+//        playersGeTCard(playerList, playDeck);
+//        dealer.getDealerHand().getCardHand().getCardHand().add(deckService.getCard(playDeck, false));
+//
+//        //2nd card, with dealer card face up
+//        playersGeTCard(playerList, playDeck);
+//        dealer.getDealerHand().getCardHand().getCardHand().add(deckService.getCard(playDeck, true));
     }
 
     private void playersGeTCard(List<Player> playerList, Deck deck) {
-
+/*
         for (Player player : playerList) {
             List<PlayerHand> handList = player.getPlayerHandList();
             if (handList == null) {
@@ -72,14 +77,14 @@ public class GameServiceImpl implements GameService {
             else
                 currHand = handList.get(0);
 
-            currHand.getCardHand().add(deckService.getCard(deck, true));
+            currHand.getCardHand().getCardHand().add(deckService.getCard(deck, true));
             if (handList.size() == 0)
                 handList.add(currHand);
             else
                 handList.set(0, currHand);
 
             player.setPlayerHandList(handList);
-        }
+        }*/
     }
 
 }

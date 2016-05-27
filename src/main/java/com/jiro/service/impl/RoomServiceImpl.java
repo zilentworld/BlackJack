@@ -25,6 +25,10 @@ public class RoomServiceImpl implements RoomService {
             if (room.getPlayerList() == null)
                 room.setPlayerList(new ArrayList<>());
 
+
+            if(player.getUsername() != null && player.getUsername().length() > 0)
+                System.out.println(player.getUsername() + " has join room " + room.getRoomId());
+
             room.getPlayerList().add(player);
         }
     }

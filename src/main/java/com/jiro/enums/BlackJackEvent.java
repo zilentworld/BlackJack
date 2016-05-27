@@ -7,11 +7,12 @@ import static com.jiro.enums.BlackJackEventType.*;
  */
 public enum BlackJackEvent {
 
+    BET("bet", PLAYER_EVENT),
+
     HIT("hit", PLAYER_EVENT),
     STAND("stand", PLAYER_EVENT),
     DOUBLE("double", PLAYER_EVENT),
     SPLIT("split", PLAYER_EVENT),
-    BET("bet", PLAYER_EVENT),
 
     DEALER_HIT("dealer_hit", DEALER_EVENT),
 

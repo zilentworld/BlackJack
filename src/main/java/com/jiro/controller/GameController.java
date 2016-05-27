@@ -1,6 +1,8 @@
 package com.jiro.controller;
 
+import com.jiro.dao.DealerDao;
 import com.jiro.dao.PlayerDao;
+import com.jiro.model.Dealer;
 import com.jiro.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ public class GameController {
 
     @Autowired
     private PlayerDao playerDao;
+    @Autowired
+    private DealerDao dealerDao;
 
     /*
         @RequestMapping("/play")
@@ -50,7 +54,20 @@ public class GameController {
         } catch (Exception ex) {
             return "Error creating the user: " + ex.toString();
         }
-        return "User succesfully created! (id = " + player.getPlayerId() + ")";
+        return "User successfully created! (id = " + player.getId() + ")";
+    }
+
+    @RequestMapping("/createDealer")
+    @ResponseBody
+    public String createDealer(String username, String password) {
+        Dealer dealer = null;
+        try {
+            dealer = new Dealer(username, password);
+            dealerDao.save(dealer);
+        } catch (Exception ex) {
+            return "Error creating the user: " + ex.toString();
+        }
+        return "Dealer successfully created! (id = " + dealer.getId() + ")";
     }
 
     @RequestMapping("/test")

@@ -11,4 +11,6 @@ public interface PlayerService {
 
     List<Player> getPlayerList();
 
+    boolean makeBet(Player player, int betAmount);
+
 }

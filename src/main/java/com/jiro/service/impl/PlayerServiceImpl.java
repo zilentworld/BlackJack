@@ -18,4 +18,10 @@ public class PlayerServiceImpl implements PlayerService {
         return null;
     }
 
+    @Override
+    public boolean makeBet(Player player, int betAmount) {
+        if(player.getTotalChipAmount() < betAmount)
+            return false;
+        return true;
+    }
 }
