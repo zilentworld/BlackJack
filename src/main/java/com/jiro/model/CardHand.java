@@ -8,23 +8,33 @@ import java.util.List;
  */
 public class CardHand {
 
-    private List<Card> cardHand;
+    private List<Card> cards;
 
-    public List<Card> getCardHand() {
-        if(cardHand == null) {
-            cardHand = new ArrayList<>();
+    public List<Card> getCards() {
+        if(cards == null) {
+            cards = new ArrayList<>();
         }
-        return cardHand;
+
+        return cards;
     }
 
-    public void setCardHand(List<Card> cardHand) {
-        this.cardHand = cardHand;
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
     }
 
     public CardHand() {
     }
 
-    public CardHand(List<Card> cardHand) {
-        this.cardHand = cardHand;
+    public CardHand(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if(cards != null && cards.size() > 0)
+            cards.forEach(card -> sb.append(card.toString()));
+
+        return sb.toString();
     }
 }

@@ -1,8 +1,9 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "room")
@@ -13,31 +14,44 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roomId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "dealer_id")
-    private Dealer dealer;
+    private Account dealer;
+
+    @Column(name = "round_count")
+    private int roundCount;
+
+    @Column(name = "create_time", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime;
+
+    @Column(name = "leave_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date destroyTime;
 
     @Transient
-    private List<Player> playerList;
+    private List<RoomPlayer> roomPlayersList;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private Game game;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Game> gameList;
 
-    public Dealer getDealer() {
+    public Account getDealer() {
         return dealer;
     }
 
-    public void setDealer(Dealer dealer) {
+    public void setDealer(Account dealer) {
         this.dealer = dealer;
     }
 
-    public List<Player> getPlayerList() {
-        return playerList;
+    public List<RoomPlayer> getRoomPlayersList() {
+        if (roomPlayersList == null) {
+            roomPlayersList = new ArrayList<>();
+        }
+        return roomPlayersList;
     }
 
-    public void setPlayerList(List<Player> playerList) {
-        this.playerList = playerList;
+    public void setRoomPlayersList(List<RoomPlayer> roomPlayersList) {
+        this.roomPlayersList = roomPlayersList;
     }
 
     public long getRoomId() {
@@ -48,11 +62,41 @@ public class Room {
         this.roomId = roomId;
     }
 
-    public Game getGame() {
-        return game;
+    public List<Game> getGameList() {
+        if(gameList == null)
+            gameList = new ArrayList<>();
+        return gameList;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGameList(List<Game> gameList) {
+        this.gameList = gameList;
+    }
+
+    public int getRoundCount() {
+        return roundCount;
+    }
+
+    public void setRoundCount(int roundCount) {
+        this.roundCount = roundCount;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getDestroyTime() {
+        return destroyTime;
+    }
+
+    public void setDestroyTime(Date destroyTime) {
+        this.destroyTime = destroyTime;
+    }
+
+    public void incRoundCount() {
+        this.roundCount++;
     }
 }

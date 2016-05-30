@@ -1,6 +1,9 @@
 package com.jiro.model;
 
+import com.jiro.constants.Constants;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,8 +15,13 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long gameId;
 
-    @OneToOne(mappedBy="game", cascade=CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
+
+    @ManyToOne
+    @JoinColumn(name = "dealer_id")
+    private Account dealer;
 
     @Transient
     private Deck playDeck;
@@ -21,16 +29,8 @@ public class Game {
     @Transient
     private Deck discardDeck;
 
-    @Transient
-    private List<Player> playerList;
-
-    public List<Player> getPlayerList() {
-        return playerList;
-    }
-
-    public void setPlayerList(List<Player> playerList) {
-        this.playerList = playerList;
-    }
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Round> roundList;
 
     public long getGameId() {
         return gameId;
@@ -49,6 +49,11 @@ public class Game {
     }
 
     public Deck getPlayDeck() {
+        if(playDeck == null) {
+            playDeck = new Deck(Constants.DEFAULT_DECK_SIZE);
+            playDeck.populateDeck();
+            playDeck.shuffleDeck();
+        }
         return playDeck;
     }
 
@@ -64,10 +69,31 @@ public class Game {
         this.discardDeck = discardDeck;
     }
 
-    public Game() {}
+    public List<Round> getRoundList() {
+        if(roundList == null) {
+            roundList = new ArrayList<>();
+        }
+        return roundList;
+    }
+
+    public void setRoundList(List<Round> roundList) {
+        this.roundList = roundList;
+    }
+
+    public Account getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(Account dealer) {
+        this.dealer = dealer;
+    }
+
+    public Game() {
+    }
 
     public Game(Room room, Deck playDeck) {
         this.room = room;
+        this.dealer = room.getDealer();
         this.playDeck = playDeck;
         this.discardDeck = new Deck();
     }

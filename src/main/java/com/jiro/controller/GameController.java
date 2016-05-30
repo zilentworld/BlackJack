@@ -1,80 +1,106 @@
 package com.jiro.controller;
 
-import com.jiro.dao.DealerDao;
-import com.jiro.dao.PlayerDao;
-import com.jiro.model.Dealer;
-import com.jiro.model.Player;
+import com.jiro.model.Account;
+import com.jiro.model.Room;
+import com.jiro.service.AccountService;
+import com.jiro.service.GameService;
+import com.jiro.service.RoomService;
+import com.jiro.service.RoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class GameController {
 
     @Autowired
-    private PlayerDao playerDao;
+    private AccountService accountService;
     @Autowired
-    private DealerDao dealerDao;
+    private RoomService roomService;
+    @Autowired
+    private GameService gameService;
+    @Autowired
+    private RoundService roundService;
 
-    /*
-        @RequestMapping("/play")
-        public String play(Model model) {
 
-    //        RoomService roomService = new RoomServiceImpl();
-    //        GameService gameService = new GameServiceImpl();
-
-            Dealer dealer = new Dealer();
-            Room room = roomService.createNewRoom(dealer);
-
-            Player p1 = new Player(1);
-            Player p2 = new Player(2);
-
-            roomService.joinRoom(room, p1);
-            roomService.joinRoom(room, p2);
-
-            Game game = gameService.createNewGame(room);
-            gameService.startRound(game);
-
-            System.out.println("Dealer Hand:");
-            System.out.println(dealer.getDealerHand().toString());
-            System.out.println("Player hands:");
-            game.getPlayerList().forEach(player -> player.getPlayerHandList().forEach(System.out::println));
-
-            return "play";
-        }*/
-
-    @RequestMapping("/create")
-    @ResponseBody
-    public String create(String username, String password) {
-        Player player = null;
+    @RequestMapping("/createPlayer")
+    public void createPlayer(@RequestParam(required = true) String username,
+                             @RequestParam(required = true) String password,
+                             @RequestParam(required = false) Integer initialChips) {
+        String output = "";
         try {
-            player = new Player(username, password);
-            playerDao.save(player);
+            Account player = accountService.createNewPlayer(username, password, initialChips);
+            output = "User successfully created! (id = " + player.getId() + ")";
         } catch (Exception ex) {
-            return "Error creating the user: " + ex.toString();
+            output = "Error creating the user: " + ex.toString();
         }
-        return "User successfully created! (id = " + player.getId() + ")";
+        System.out.println(output);
     }
 
     @RequestMapping("/createDealer")
-    @ResponseBody
-    public String createDealer(String username, String password) {
-        Dealer dealer = null;
+    public void createDealer(@RequestParam(required = true) String username,
+                             @RequestParam(required = true) String password) {
+        String output = "";
         try {
-            dealer = new Dealer(username, password);
-            dealerDao.save(dealer);
+            Account dealer = accountService.createNewDealer(username, password);
+            output = "User successfully created! (id = " + dealer.getId() + ")";
         } catch (Exception ex) {
-            return "Error creating the user: " + ex.toString();
+            output = "Error creating the user: " + ex.toString();
         }
-        return "Dealer successfully created! (id = " + dealer.getId() + ")";
+        System.out.println(output);
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/createRoom")
+    @ResponseBody // means the string output is the result itself,
+    // without it the function name.html will be called
+    public void createRoom(@RequestParam(required = true) long dealerId) {
+
+        Room room = roomService.createNewRoom(dealerId);
+        if (room == null) {
+            System.out.println("failed in creating room");
+            return;
+        }
+
+        System.out.println("room id:" + room.getRoomId());
+    }
+
+    @RequestMapping("/joinRoom")
     @ResponseBody
-    public void test(String username, String password) {
-        System.out.println(playerDao.findByUsername(username).toString());
-        System.out.println(playerDao.findByPassword(password).toString());
+    public String joinRoom(@RequestParam(required = true) long roomId,
+                           @RequestParam(required = true) long playerId) {
+        roomService.joinRoom(roomId, playerId);
+        System.out.println("joined room");
+
+        return "createRoom";
     }
 
+    @RequestMapping("/newGame")
+    public String newGame(@RequestParam(required = true) long roomId) {
+        gameService.createNewGame(roomId);
+
+        return "createRoom";
+    }
+
+    @RequestMapping("/newRound")
+    public String newRound(long gameId) {
+        roundService.createNewRound(gameId);
+
+        return "createRoom";
+    }
+
+    @RequestMapping("/joinRound")
+    public String joinRound(long roundId, long playerId, int betAmount) {
+        roundService.joinRound(roundId, playerId, betAmount);
+
+        return "createRoom";
+    }
+
+    @RequestMapping("/startRound")
+    public String startRound(long roundId) {
+        roundService.startRound(roundId);
+
+        return "createRoom";
+    }
 }

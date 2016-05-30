@@ -1,6 +1,6 @@
 package com.jiro.service;
 
-import com.jiro.model.Player;
+import com.jiro.model.Account;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface PlayerService {
 
-    List<Player> getPlayerList();
+    List<Account> getPlayerList();
 
-    boolean makeBet(Player player, int betAmount);
+    boolean makeBet(Account player, int betAmount);
 
 }

@@ -1,90 +1,53 @@
 package com.jiro.service.impl;
 
 import com.jiro.constants.Constants;
-import com.jiro.model.*;
-import com.jiro.service.DeckService;
+import com.jiro.dao.GameDao;
+import com.jiro.model.Deck;
+import com.jiro.model.Game;
+import com.jiro.model.Room;
 import com.jiro.service.GameService;
+import com.jiro.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class GameServiceImpl implements GameService {
 
     @Autowired
-    private DeckService deckService;
+    private GameDao gameDao;
+    @Autowired
+    private RoomService roomService;
 
+    @Override
+    public Game createNewGame(long roomId) {
+        return createNewGame(roomService.findById(roomId));
+    }
 
     @Override
     public Game createNewGame(Room room) {
+        Deck deck = new Deck(Constants.DEFAULT_DECK_SIZE);
 
-        Deck deck = new Deck();
-        deck.setDeckSize(Constants.DEFAULT_DECK_SIZE);
+        deck.populateDeck();
+        deck.shuffleDeck();
 
-        if (deckService == null) {
-            deckService = new DeckServiceImpl();
-        }
+        System.out.println(room.getDealer().getId());
 
-        deckService.populateDeck(deck);
-        deckService.shuffleDeck(deck);
+        Game game = new Game(room, deck);
+        System.out.println("1");
+        gameDao.save(game);
 
-        Game game = room.getGame();
-        if (game == null) {
-            game = new Game(room, deck);
-        } else {
-            game.setPlayDeck(deck);
-            game.setDiscardDeck(new Deck());
-        }
+        System.out.println("2");
+        roomService.addGame(room, game);
+        System.out.println("3");
+        roomService.saveRoom(room);
+        System.out.println("4");
 
         return game;
     }
 
     @Override
-    public void startRound(Game game) {
-        System.out.println("Start game:"+game.getGameId());
-        game.setPlayerList(game.getRoom().getPlayerList());
-        distributeInitialCards(game);
-    }
-
-    private void distributeInitialCards(Game game) {
-//        Deck playDeck = game.getPlayDeck();
-//        Dealer dealer = game.getRoom().getDealer();
-//        List<Player> playerList = game.getRoom().getPlayerList();
-//        game.setPlayerList(playerList);
-//
-//        //1st card, with dealer card face down
-//        playersGeTCard(playerList, playDeck);
-//        dealer.getDealerHand().getCardHand().getCardHand().add(deckService.getCard(playDeck, false));
-//
-//        //2nd card, with dealer card face up
-//        playersGeTCard(playerList, playDeck);
-//        dealer.getDealerHand().getCardHand().getCardHand().add(deckService.getCard(playDeck, true));
-    }
-
-    private void playersGeTCard(List<Player> playerList, Deck deck) {
-/*
-        for (Player player : playerList) {
-            List<PlayerHand> handList = player.getPlayerHandList();
-            if (handList == null) {
-                handList = new ArrayList<>();
-            }
-
-            PlayerHand currHand;
-            if (handList.size() == 0)
-                currHand = new PlayerHand();
-            else
-                currHand = handList.get(0);
-
-            currHand.getCardHand().getCardHand().add(deckService.getCard(deck, true));
-            if (handList.size() == 0)
-                handList.add(currHand);
-            else
-                handList.set(0, currHand);
-
-            player.setPlayerHandList(handList);
-        }*/
+    public Game findById(long gameId) {
+        return gameDao.findOne(gameId);
     }
 
 }

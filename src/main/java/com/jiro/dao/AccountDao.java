@@ -1,6 +1,6 @@
 package com.jiro.dao;
 
-import com.jiro.model.Player;
+import com.jiro.model.Account;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by dev-pc on 5/26/16.
  */
 @Transactional
-public interface PlayerDao extends CrudRepository<Player, Long> {
+public interface AccountDao extends CrudRepository<Account, Long> {
 
-    Player findByUsername(String username);
+    Account findByUsername(String username);
 
-    Player findByPassword(String password);
+    Account findByPassword(String password);
 
 }

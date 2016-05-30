@@ -1,6 +1,6 @@
 package com.jiro.service.impl;
 
-import com.jiro.model.Player;
+import com.jiro.model.Account;
 import com.jiro.service.PlayerService;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +13,14 @@ import java.util.List;
 public class PlayerServiceImpl implements PlayerService {
 
     @Override
-    public List<Player> getPlayerList() {
+    public List<Account> getPlayerList() {
         System.out.println("pumasok dito.");
         return null;
     }
 
     @Override
-    public boolean makeBet(Player player, int betAmount) {
-        if(player.getTotalChipAmount() < betAmount)
+    public boolean makeBet(Account player, int betAmount) {
+        if(player.getTotalChips() < betAmount)
             return false;
         return true;
     }
