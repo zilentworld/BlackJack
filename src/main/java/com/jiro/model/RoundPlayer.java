@@ -94,7 +94,9 @@ public class RoundPlayer {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Player Name:" + player.getUsername());
-        return super.toString();
+        sb.append("Player Name:" + player.getUsername() + "\n");
+        roundPlayerCardHandList.forEach(roundPlayerCardHand -> sb.append(roundPlayerCardHand.toString()));
+
+        return sb.toString();
     }
 }

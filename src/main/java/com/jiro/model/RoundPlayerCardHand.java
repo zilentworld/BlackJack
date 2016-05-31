@@ -1,7 +1,6 @@
 package com.jiro.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by dev-pc on 5/30/16.
@@ -11,9 +10,9 @@ import java.util.List;
 public class RoundPlayerCardHand {
 
     @Id
-    @Column(name = "round_card_hand_id")
+    @Column(name = "roundCardHandId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long round_card_hand_id;
+    private long roundCardHandId;
 
     @ManyToOne
     @JoinColumn(name = "round_player_id")
@@ -25,12 +24,12 @@ public class RoundPlayerCardHand {
     @Transient
     private CardHand cardHand;
 
-    public long getRound_card_hand_id() {
-        return round_card_hand_id;
+    public long getRoundCardHandId() {
+        return roundCardHandId;
     }
 
-    public void setRound_card_hand_id(long round_card_hand_id) {
-        this.round_card_hand_id = round_card_hand_id;
+    public void setRoundCardHandId(long roundCardHandId) {
+        this.roundCardHandId = roundCardHandId;
     }
 
     public RoundPlayer getRoundPlayer() {
@@ -50,6 +49,8 @@ public class RoundPlayerCardHand {
     }
 
     public CardHand getCardHand() {
+        if(cardHand == null)
+            cardHand = new CardHand();
         return cardHand;
     }
 
@@ -60,11 +61,12 @@ public class RoundPlayerCardHand {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Player Name: " + roundPlayer.getPlayer().getUsername());
-        sb.append("Bet amount: " + betAmount);
-        sb.append("CardHand: " + cardHand.toString());
+//        sb.append("Player Name: " + roundPlayer.getPlayer().getUsername());
+        sb.append("RoundCardHandId:"+ roundCardHandId);
+        sb.append("CardHand: " + cardHand.toString() + "\n");
+        sb.append("Bet amount: " + betAmount + "\n");
 
-        return super.toString();
+        return sb.toString();
     }
 
     public RoundPlayerCardHand() {}
@@ -73,4 +75,5 @@ public class RoundPlayerCardHand {
         this.roundPlayer = roundPlayer;
         this.betAmount = betAmount;
     }
+
 }

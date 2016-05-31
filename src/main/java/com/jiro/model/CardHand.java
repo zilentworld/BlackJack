@@ -33,7 +33,7 @@ public class CardHand {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if(cards != null && cards.size() > 0)
-            cards.forEach(card -> sb.append(card.toString()));
+            cards.forEach(card -> sb.append(card.toString() + " "));
 
         return sb.toString();
     }

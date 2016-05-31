@@ -8,6 +8,7 @@ import com.jiro.service.RoomService;
 import com.jiro.service.RoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,9 +27,10 @@ public class GameController {
 
 
     @RequestMapping("/createPlayer")
-    public void createPlayer(@RequestParam(required = true) String username,
+    public String createPlayer(@RequestParam(required = true) String username,
                              @RequestParam(required = true) String password,
-                             @RequestParam(required = false) Integer initialChips) {
+                             @RequestParam(required = false) Integer initialChips,
+                             ModelMap model) {
         String output = "";
         try {
             Account player = accountService.createNewPlayer(username, password, initialChips);
@@ -37,11 +39,15 @@ public class GameController {
             output = "Error creating the user: " + ex.toString();
         }
         System.out.println(output);
+        model.addAttribute("result1", output);
+
+        return "test";
     }
 
     @RequestMapping("/createDealer")
-    public void createDealer(@RequestParam(required = true) String username,
-                             @RequestParam(required = true) String password) {
+    public String createDealer(@RequestParam(required = true) String username,
+                             @RequestParam(required = true) String password,
+                               ModelMap model) {
         String output = "";
         try {
             Account dealer = accountService.createNewDealer(username, password);
@@ -50,57 +56,70 @@ public class GameController {
             output = "Error creating the user: " + ex.toString();
         }
         System.out.println(output);
+        model.addAttribute("result1", output);
+
+        return "test";
     }
 
     @RequestMapping("/createRoom")
-    @ResponseBody // means the string output is the result itself,
+//    @ResponseBody // means the string output is the result itself,
     // without it the function name.html will be called
-    public void createRoom(@RequestParam(required = true) long dealerId) {
+    public String createRoom(@RequestParam(required = true) long dealerId,
+                           ModelMap model) {
 
+        String output = "";
         Room room = roomService.createNewRoom(dealerId);
         if (room == null) {
             System.out.println("failed in creating room");
-            return;
+            output = "failed in creating room";
+            return "test";
         }
 
         System.out.println("room id:" + room.getRoomId());
+        output = "room id:" + room.getRoomId();
+        model.addAttribute("result1", output);
+        return "test";
     }
 
     @RequestMapping("/joinRoom")
     @ResponseBody
     public String joinRoom(@RequestParam(required = true) long roomId,
-                           @RequestParam(required = true) long playerId) {
+                           @RequestParam(required = true) long playerId,
+                           ModelMap model) {
         roomService.joinRoom(roomId, playerId);
-        System.out.println("joined room");
+        System.out.println("joined room:"+roomId);
+        String output = "joined room:"+roomId;
 
-        return "createRoom";
+        return "test";
     }
 
     @RequestMapping("/newGame")
-    public String newGame(@RequestParam(required = true) long roomId) {
+    public String newGame(@RequestParam(required = true) long roomId, ModelMap model) {
         gameService.createNewGame(roomId);
 
-        return "createRoom";
+        return "test";
     }
 
     @RequestMapping("/newRound")
-    public String newRound(long gameId) {
+    public String newRound(long gameId, ModelMap model) {
         roundService.createNewRound(gameId);
 
-        return "createRoom";
+        return "test";
     }
 
     @RequestMapping("/joinRound")
-    public String joinRound(long roundId, long playerId, int betAmount) {
+    public String joinRound(long roundId, long playerId, int betAmount, ModelMap model) {
         roundService.joinRound(roundId, playerId, betAmount);
+//        model.addAttribute("result1", roundService.findById(roundId).toString());
 
-        return "createRoom";
+        return "test";
     }
 
     @RequestMapping("/startRound")
-    public String startRound(long roundId) {
+    public String startRound(long roundId, ModelMap model) {
         roundService.startRound(roundId);
+        model.addAttribute("result1", roundService.findById(roundId).toString());
 
-        return "createRoom";
+        return "test";
     }
 }

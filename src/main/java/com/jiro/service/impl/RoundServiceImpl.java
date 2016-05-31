@@ -74,7 +74,6 @@ public class RoundServiceImpl implements RoundService {
             Deck playDeck = round.getGame().getPlayDeck();
             CardHand dealerHand = round.getDealerHand();
 
-
             //TODO
             //get dealer first hand. not visible
             cardHandService.addCard(dealerHand, playDeck, false);
@@ -114,4 +113,8 @@ public class RoundServiceImpl implements RoundService {
         return false;
     }
 
+    @Override
+    public Round findById(long roundId) {
+        return roundDao.findOne(roundId);
+    }
 }

@@ -21,4 +21,6 @@ public interface RoundService {
 
     boolean joinRound (long roundId, long playerId, int initialBet);
 
+    Round findById (long roundId);
+
 }

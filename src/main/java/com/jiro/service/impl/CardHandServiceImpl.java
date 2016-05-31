@@ -14,6 +14,5 @@ public class CardHandServiceImpl implements CardHandService {
     @Override
     public void addCard(CardHand cardHand, Deck deck, boolean isVisible) {
         cardHand.getCards().add(deck.getCard(isVisible));
-        System.out.println("addCard:"+cardHand.toString());
     }
 }
