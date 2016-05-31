@@ -7,7 +7,9 @@ import com.jiro.model.Account;
  */
 public interface AccountService {
 
-    boolean makeBet(Account player, int betAmount);
+    boolean canMakeBet(Account player, int betAmount);
+
+    void makeBet(Account player, int betAmount);
 
     Account createNewPlayer(String username, String password, Integer initialChips);
 

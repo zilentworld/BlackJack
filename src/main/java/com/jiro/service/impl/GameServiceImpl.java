@@ -4,7 +4,9 @@ import com.jiro.constants.Constants;
 import com.jiro.dao.GameDao;
 import com.jiro.model.Deck;
 import com.jiro.model.Game;
+import com.jiro.model.GameDeck;
 import com.jiro.model.Room;
+import com.jiro.service.GameDeckService;
 import com.jiro.service.GameService;
 import com.jiro.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class GameServiceImpl implements GameService {
     private GameDao gameDao;
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private GameDeckService gameDeckService;
+
 
     @Override
     public Game createNewGame(long roomId) {
@@ -33,14 +38,16 @@ public class GameServiceImpl implements GameService {
         System.out.println(room.getDealer().getId());
 
         Game game = new Game(room, deck);
-        System.out.println("1");
+        deck.setGame(game);
+        GameDeck gameDeck = new GameDeck(deck);
+        game.setGameDeck(gameDeck);
+
         gameDao.save(game);
 
-        System.out.println("2");
         roomService.addGame(room, game);
-        System.out.println("3");
         roomService.saveRoom(room);
-        System.out.println("4");
+
+        gameDeckService.saveGameDeck(gameDeck);
 
         return game;
     }

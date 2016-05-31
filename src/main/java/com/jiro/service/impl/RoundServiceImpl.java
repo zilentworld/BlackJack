@@ -5,10 +5,7 @@ import com.jiro.dao.RoundDao;
 import com.jiro.dao.RoundPlayerCardHandDao;
 import com.jiro.dao.RoundPlayerDao;
 import com.jiro.model.*;
-import com.jiro.service.AccountService;
-import com.jiro.service.CardHandService;
-import com.jiro.service.GameService;
-import com.jiro.service.RoundService;
+import com.jiro.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +29,8 @@ public class RoundServiceImpl implements RoundService {
     private RoundPlayerDao roundPlayerDao;
     @Autowired
     private RoundPlayerCardHandDao roundPlayerCardHandDao;
+    @Autowired
+    private GameDeckService gameDeckService;
 
 
     @Override
@@ -72,25 +71,36 @@ public class RoundServiceImpl implements RoundService {
         System.out.println("initialCards:"+roundPlayerList.size());
         if (roundPlayerList.size() > 0) {
             Deck playDeck = round.getGame().getPlayDeck();
+
+            if(playDeck == null) {
+                System.out.println("deck is NULL");
+                playDeck = gameDeckService.getDeck(round.getGame().getGameDeck().getDeckId());
+            }
+
             CardHand dealerHand = round.getDealerHand();
 
-            //TODO
             //get dealer first hand. not visible
-            cardHandService.addCard(dealerHand, playDeck, false);
+            cardHandService.addCard(dealerHand, playDeck, true);
             //get 1st card for all players
-            roundPlayerList.forEach(roundPlayer ->
-                    cardHandService.addCard(
-                            roundPlayer.getRoundPlayerCardHandList().get(0).getCardHand()
-                            , playDeck, true));
+            givePlayerCards(round, playDeck);
 
             //get dealer second hand. visible
             cardHandService.addCard(dealerHand, playDeck, true);
             //get 2nd card for all players
-            roundPlayerList.forEach(roundPlayer ->
-                    cardHandService.addCard(
-                            roundPlayer.getRoundPlayerCardHandList().get(0).getCardHand()
-                            , playDeck, true));
+            givePlayerCards(round, playDeck);
+
+            gameDeckService.updateGameDeck(round.getGame().getGameDeck(), playDeck);
+
+            round.getGame().setPlayDeck(playDeck);
         }
+    }
+
+    public void givePlayerCards(Round round, Deck playDeck) {
+        List<RoundPlayer> roundPlayerList = round.getRoundPlayerList();
+        roundPlayerList.forEach(roundPlayer ->
+                cardHandService.addCard(
+                        roundPlayer.getRoundPlayerCardHandList().get(0).getCardHand()
+                        , playDeck, true));
     }
 
     @Override
@@ -101,8 +111,11 @@ public class RoundServiceImpl implements RoundService {
     @Override
     public boolean joinRound(Round round, Account player, int initialBet) {
         if (round.getRoundPlayerList().size() < Constants.MAX_PLAYER_COUNT)
-            if (accountService.makeBet(player, initialBet)) {
-                RoundPlayer roundPlayer = new RoundPlayer(round, player, initialBet);
+            if (accountService.canMakeBet(player, initialBet)) {
+                RoundPlayer roundPlayer = new RoundPlayer(round, player);
+
+                roundPlayer.getRoundPlayerCardHandList().add(new RoundPlayerCardHand(roundPlayer, initialBet));
+
                 roundPlayerDao.save(roundPlayer);
                 roundPlayerCardHandDao.save(roundPlayer.getRoundPlayerCardHandList().get(0));
                 round.getRoundPlayerList().add(roundPlayer);

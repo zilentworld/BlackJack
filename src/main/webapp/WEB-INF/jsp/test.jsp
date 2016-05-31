@@ -12,5 +12,6 @@
 </head>
 <body>
 ${result1}
+${result2}
 </body>
 </html>

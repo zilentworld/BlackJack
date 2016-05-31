@@ -20,12 +20,15 @@ public class AccountServiceImpl implements AccountService {
     private AccountDao accountDao;
 
     @Override
-    public boolean makeBet(Account player, int betAmount) {
-        if (player.getTotalChips() >= betAmount) {
+    public boolean canMakeBet(Account player, int betAmount) {
+        return player.getTotalChips() >= betAmount;
+    }
+
+    @Override
+    public void makeBet(Account player, int betAmount) {
+        if (canMakeBet(player, betAmount)) {
             player.setTotalChips(player.getTotalChips() - betAmount);
-            return true;
         }
-        return false;
     }
 
     @Override
@@ -35,6 +38,8 @@ public class AccountServiceImpl implements AccountService {
             player.setTotalChips(initialChips);
         else
             player.setTotalChips(Constants.INITIAL_CHIP_AMOUNT);
+
+        accountDao.save(player);
 
         return player;
     }

@@ -1,7 +1,5 @@
 package com.jiro.model;
 
-import com.jiro.constants.Constants;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +20,9 @@ public class Game {
     @ManyToOne
     @JoinColumn(name = "dealer_id")
     private Account dealer;
+
+    @OneToOne(mappedBy = "game",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private GameDeck gameDeck;
 
     @Transient
     private Deck playDeck;
@@ -49,11 +50,6 @@ public class Game {
     }
 
     public Deck getPlayDeck() {
-        if(playDeck == null) {
-            playDeck = new Deck(Constants.DEFAULT_DECK_SIZE);
-            playDeck.populateDeck();
-            playDeck.shuffleDeck();
-        }
         return playDeck;
     }
 
@@ -78,6 +74,14 @@ public class Game {
 
     public void setRoundList(List<Round> roundList) {
         this.roundList = roundList;
+    }
+
+    public GameDeck getGameDeck() {
+        return gameDeck;
+    }
+
+    public void setGameDeck(GameDeck gameDeck) {
+        this.gameDeck = gameDeck;
     }
 
     public Account getDealer() {

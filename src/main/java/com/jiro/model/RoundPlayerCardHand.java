@@ -1,5 +1,7 @@
 package com.jiro.model;
 
+import com.jiro.enums.RoundCardHandStatus;
+
 import javax.persistence.*;
 
 /**
@@ -23,6 +25,9 @@ public class RoundPlayerCardHand {
 
     @Transient
     private CardHand cardHand;
+
+    @Transient
+    private RoundCardHandStatus roundCardHandStatus;
 
     public long getRoundCardHandId() {
         return roundCardHandId;
@@ -58,6 +63,14 @@ public class RoundPlayerCardHand {
         this.cardHand = cardHand;
     }
 
+    public RoundCardHandStatus getRoundCardHandStatus() {
+        return roundCardHandStatus;
+    }
+
+    public void setRoundCardHandStatus(RoundCardHandStatus roundCardHandStatus) {
+        this.roundCardHandStatus = roundCardHandStatus;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -74,6 +87,7 @@ public class RoundPlayerCardHand {
     public RoundPlayerCardHand(RoundPlayer roundPlayer, int betAmount) {
         this.roundPlayer = roundPlayer;
         this.betAmount = betAmount;
+        this.roundCardHandStatus = RoundCardHandStatus.WAITING;
     }
 
 }

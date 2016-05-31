@@ -1,7 +1,5 @@
 package com.jiro.model;
 
-import com.jiro.enums.RoundStatus;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +26,6 @@ public class RoundPlayer {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roundPlayer")
     private List<RoundPlayerCardHand> roundPlayerCardHandList;
-
-    @Transient
-    private RoundStatus roundStatus;
 
     public long getRoundListId() {
         return roundListId;
@@ -75,20 +70,9 @@ public class RoundPlayer {
         this.player = player;
     }
 
-    public RoundPlayer(Round round, Account player, int initialBet) {
+    public RoundPlayer(Round round, Account player) {
         this.round = round;
         this.player = player;
-
-        roundPlayerCardHandList = new ArrayList<>();
-        roundPlayerCardHandList.add(new RoundPlayerCardHand(this, initialBet));
-    }
-
-    public RoundStatus getRoundStatus() {
-        return roundStatus;
-    }
-
-    public void setRoundStatus(RoundStatus roundStatus) {
-        this.roundStatus = roundStatus;
     }
 
     @Override

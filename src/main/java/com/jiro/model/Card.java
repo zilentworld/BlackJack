@@ -34,17 +34,28 @@ public class Card {
         isVisible = visible;
     }
 
-    public Card() {}
+    public Card() {
+    }
 
     public Card(CardNumber cardNumber, CardSuit cardSuit) {
         this.cardNumber = cardNumber;
         this.cardSuit = cardSuit;
+        this.isVisible = true;
     }
 
     public Card(CardNumber cardNumber, CardSuit cardSuit, boolean isVisible) {
         this.cardNumber = cardNumber;
         this.cardSuit = cardSuit;
         this.isVisible = isVisible;
+    }
+
+    public Card(String fromDb) {
+        String[] splitz = fromDb.split("!");
+        if (splitz.length > 1) {
+            cardNumber = CardNumber.findBySymbol(splitz[0]);
+            cardSuit = CardSuit.findBySymbol(splitz[1]);
+        }
+        this.isVisible = true;
     }
 
     public Deck getDeck() {
@@ -57,9 +68,13 @@ public class Card {
 
     @Override
     public String toString() {
-        if(isVisible)
+        if (isVisible)
             return cardNumber.getSymbol() + cardSuit.getSymbol();
         else
             return "??";
+    }
+
+    public String toDbDeck() {
+        return cardNumber.getSymbol() + "!" + cardSuit.getSymbol();
     }
 }

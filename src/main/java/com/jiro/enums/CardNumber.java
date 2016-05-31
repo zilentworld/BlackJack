@@ -1,29 +1,33 @@
 package com.jiro.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by dev-pc on 5/23/16.
  */
 public enum CardNumber {
-    ACE("ace", "A", 1, 11),
-    TWO("two", "2", 2, 2),
-    THREE("three", "3", 3, 3),
-    FOUR("four", "4", 4, 4),
-    FIVE("five", "5", 5, 5),
-    SIX("six","6", 6, 6),
-    SEVEN("seven","7", 7, 7),
-    EIGHT("eight","8", 8, 8),
-    NINE("nine","9", 9, 9),
-    TEN("ten","10", 10, 10),
-    JACK("jack","J", 10, 10),
-    QUEEN("queen","Q", 10, 10),
-    KING("king","K", 10, 10);
+
+    ACE("A", "ace", 1, 11),
+    TWO("2", "two", 2, 2),
+    THREE("3", "three", 3, 3),
+    FOUR("4", "four", 4, 4),
+    FIVE("5", "five", 5, 5),
+    SIX("6", "six", 6, 6),
+    SEVEN("7", "seven", 7, 7),
+    EIGHT("8", "eight", 8, 8),
+    NINE("9", "nine", 9, 9),
+    TEN("10", "ten", 10, 10),
+    JACK("J", "jack", 10, 10),
+    QUEEN("Q", "queen", 10, 10),
+    KING("K", "king", 10, 10);
 
     private String number;
     private String symbol;
     private int hardValue;
     private int softValue;
 
-    CardNumber(String number, String symbol, int hardValue, int softValue) {
+    CardNumber(String symbol, String number, int hardValue, int softValue) {
         this.number = number;
         this.symbol = symbol;
         this.hardValue = hardValue;
@@ -44,5 +48,17 @@ public enum CardNumber {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    private static final Map<String, CardNumber> map;
+    static {
+        map = new HashMap();
+        for (CardNumber v : CardNumber.values()) {
+            map.put(v.symbol, v);
+        }
+    }
+
+    public static CardNumber findBySymbol(String symbol) {
+        return map.get(symbol);
     }
 }

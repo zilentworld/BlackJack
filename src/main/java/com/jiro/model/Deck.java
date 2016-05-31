@@ -54,17 +54,19 @@ public class Deck {
     }
 
     public Card getCard(boolean isVisible) {
-        System.out.println(cardList.size());
         synchronized (this) {
-            if(cardList != null) {
-                Card card = cardList.get(0);
-                cardList.remove(0);
+            if (cardList != null) {
+                Card card = cardList.remove(0);
                 card.setVisible(isVisible);
 
                 return card;
             }
         }
-        return  null;
+        return null;
+    }
+
+    public void addDiscarded(Deck discarded) {
+        this.cardList.addAll(discarded.getCardList());
     }
 
     public Game getGame() {
@@ -84,8 +86,8 @@ public class Deck {
     }
 
     public List<Card> getCardList() {
-        if(cardList == null)
-            cardList = new LinkedList<>();
+        if (cardList == null)
+            cardList = new ArrayList<>();
 
         return cardList;
     }
@@ -97,13 +99,29 @@ public class Deck {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        cardList.forEach(card -> sb.append(card + "\n"));
+        cardList.forEach(card -> {
+            System.out.println(card);
+            sb.append(card + "\n");
+        });
         return sb.toString();
     }
 
-    public Deck() {}
+    public Deck() {
+    }
 
     public Deck(int deckSize) {
         this.deckSize = deckSize;
+    }
+
+    public Deck(GameDeck gameDeck) {
+        this.deckSize = gameDeck.getDeckSize();
+        this.game = gameDeck.getGame();
+        String[] splitz = gameDeck.getFullDeck().split(":");
+        cardList = new ArrayList<>();
+        for (String fromDb : splitz) {
+            Card card = new Card(fromDb);
+            if (card != null)
+                cardList.add(card);
+        }
     }
 }
