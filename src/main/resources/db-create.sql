@@ -1,51 +1,67 @@
-
-CREATE TABLE account_sequence
+CREATE TABLE account
 (
-  account_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT
-);
-CREATE TABLE bet
-(
-  bet_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  bet_amount INT(11)
-);
-CREATE TABLE chip
-(
-  chip_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  chip_desc VARCHAR(20),
-  chip_amount INT(11)
-);
-CREATE TABLE dealer
-(
-  dealer_id BIGINT(20) PRIMARY KEY NOT NULL,
-  username VARCHAR(50),
-  password VARCHAR(50)
+    account_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    username VARCHAR(50),
+    password VARCHAR(50),
+    total_chips INT(11),
+    is_player INT(11),
+    is_dealer INT(11),
+    is_admin INT(11)
 );
 CREATE TABLE game
 (
-  game_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  room_id BIGINT(20)
+    game_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    room_id BIGINT(20),
+    dealer_id INT(11)
 );
-CREATE TABLE player
+CREATE TABLE game_deck
 (
-  player_id BIGINT(20) PRIMARY KEY NOT NULL,
-  username VARCHAR(50),
-  password VARCHAR(50),
-  total_chip_amount INT(11)
+    deck_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    game_id BIGINT(20),
+    full_deck VARCHAR(10000),
+    deck_size INT(11)
 );
 CREATE TABLE room
 (
-  room_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  dealer_id BIGINT(20),
-  game_id BIGINT(20)
+    room_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    dealer_id BIGINT(20),
+    round_count INT(11),
+    create_time TIMESTAMP DEFAULT 'CURRENT_TIMESTAMP' NOT NULL,
+    leave_time TIMESTAMP
+);
+CREATE TABLE room_player_list
+(
+    room_list_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    room_id BIGINT(20),
+    player_id BIGINT(20)
 );
 CREATE TABLE round
 (
-  round_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  bet_amount INT(11)
+    round_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    game_id BIGINT(20),
+    dealer_id BIGINT(20)
 );
-CREATE TABLE round_card_list
+CREATE TABLE round_dealer_cards
 (
-  round_card_list_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  round_id BIGINT(20),
-  card_symbol VARCHAR(5)
+    round_dealer_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    round_id BIGINT(20),
+    card_symbol VARCHAR(5)
+);
+CREATE TABLE round_player
+(
+    round_player_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    round_id BIGINT(20),
+    player_id BIGINT(20)
+);
+CREATE TABLE round_player_card_hand
+(
+    round_card_hand_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    round_player_id BIGINT(20),
+    bet_amount INT(11)
+);
+CREATE TABLE round_player_cards
+(
+    round_card_list_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    round_card_hand_id BIGINT(20),
+    card_symbol VARCHAR(5)
 );
