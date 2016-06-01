@@ -74,7 +74,7 @@ public class Card {
             return "??";
     }
 
-    public String toDbDeck() {
+    public String toDbFormat() {
         return cardNumber.getSymbol() + "!" + cardSuit.getSymbol();
     }
 }

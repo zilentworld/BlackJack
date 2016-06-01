@@ -9,7 +9,7 @@ public interface AccountService {
 
     boolean canMakeBet(Account player, int betAmount);
 
-    void makeBet(Account player, int betAmount);
+    void deductChips(Account player, int betAmount);
 
     Account createNewPlayer(String username, String password, Integer initialChips);
 

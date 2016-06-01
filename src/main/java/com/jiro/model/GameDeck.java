@@ -1,7 +1,5 @@
 package com.jiro.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 
 /**
@@ -72,7 +70,7 @@ public class GameDeck {
         StringBuilder sb = new StringBuilder();
         int a = 0 ;
         for(Card card : deck.getCardList()) {
-            sb.append(card.toDbDeck());
+            sb.append(card.toDbFormat());
             if(a++ < deck.getCardList().size() - 1)
                 sb.append(":");
         }

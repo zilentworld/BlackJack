@@ -25,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void makeBet(Account player, int betAmount) {
+    public void deductChips(Account player, int betAmount) {
         if (canMakeBet(player, betAmount)) {
             player.setTotalChips(player.getTotalChips() - betAmount);
         }

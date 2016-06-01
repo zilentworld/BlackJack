@@ -30,6 +30,9 @@ public class Round {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "round")
     private List<RoundPlayer> roundPlayerList;
 
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "round")
+    private List<RoundDealerCards> roundDealerCardsList;
+
     public long getRoundId() {
         return roundId;
     }
@@ -73,6 +76,14 @@ public class Round {
 
     public void setDealerHand(CardHand dealerHand) {
         this.dealerHand = dealerHand;
+    }
+
+    public List<RoundDealerCards> getRoundDealerCardsList() {
+        return roundDealerCardsList;
+    }
+
+    public void setRoundDealerCardsList(List<RoundDealerCards> roundDealerCardsList) {
+        this.roundDealerCardsList = roundDealerCardsList;
     }
 
     public Round() {

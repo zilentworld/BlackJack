@@ -37,4 +37,16 @@ public class CardHand {
 
         return sb.toString();
     }
+
+    public String toDbFormat() {
+        StringBuilder sb = new StringBuilder();
+        int a = 0;
+        for(Card card : cards) {
+            sb.append(card.toDbFormat());
+            if(a++ < cards.size() - 1)
+                sb.append(":");
+        }
+
+        return sb.toString();
+    }
 }

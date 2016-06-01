@@ -18,8 +18,8 @@
 
     <!--&lt;!&ndash;<jpa:repositories base-package="com.jiro.dao"/>&ndash;&gt;-->
 
-    <!--<context:annotation-config/>-->
-    <!--<context:component-scan base-package="com.jiro"/>-->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.jiro"/>
 
 
     <!--&lt;!&ndash;abstract="false"&ndash;&gt;-->
@@ -48,4 +48,13 @@
             <!--</props>-->
         <!--</property>-->
     <!--</bean>-->
+
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="AccountService" />
+        <property name="service" ref="accountServiceImpl"/>
+        <property name="serviceInterface" value="com.jiro.service.AccountService" />
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+
 </beans>

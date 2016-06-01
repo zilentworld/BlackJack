@@ -14,9 +14,9 @@ public class RoundDealerCards {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roundCardListId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "round_id")
-//    private Round round;
+    @ManyToOne
+    @JoinColumn(name = "round_id")
+    private Round round;
 
     @Column(name = "round_id")
     private long round_id;

@@ -134,10 +134,10 @@ public class GameController {
     @RequestMapping("/doubleHand")
     public String doubleHand(@RequestParam(required = true) long roundCardHandId,
                              ModelMap model) {
-        RoundPlayerCardHand cardHand = roundPlayerCardHandService.findById(roundCardHandId);
-        if(accountService.canMakeBet(cardHand.getRoundPlayer().getPlayer(), cardHand.getBetAmount())) {
-        }
+        roundPlayerCardHandService.playDouble(roundCardHandId);
 
+        model.addAttribute("result1", roundPlayerCardHandService.findById(roundCardHandId).getRoundPlayer().getRound().toString());
+        model.addAttribute("result2", roundPlayerCardHandService.findById(roundCardHandId).getRoundPlayer().getRound().getGame().getPlayDeck().toString());
         return "test";
     }
 

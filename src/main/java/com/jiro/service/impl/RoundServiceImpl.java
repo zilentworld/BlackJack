@@ -2,8 +2,6 @@ package com.jiro.service.impl;
 
 import com.jiro.constants.Constants;
 import com.jiro.dao.RoundDao;
-import com.jiro.dao.RoundPlayerCardHandDao;
-import com.jiro.dao.RoundPlayerDao;
 import com.jiro.model.*;
 import com.jiro.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +24,9 @@ public class RoundServiceImpl implements RoundService {
     @Autowired
     private GameService gameService;
     @Autowired
-    private RoundPlayerDao roundPlayerDao;
-    @Autowired
-    private RoundPlayerCardHandDao roundPlayerCardHandDao;
-    @Autowired
     private GameDeckService gameDeckService;
+    @Autowired
+    private RoundPlayerService roundPlayerService;
 
 
     @Override
@@ -95,6 +91,7 @@ public class RoundServiceImpl implements RoundService {
         }
     }
 
+    @Override
     public void givePlayerCards(Round round, Deck playDeck) {
         List<RoundPlayer> roundPlayerList = round.getRoundPlayerList();
         roundPlayerList.forEach(roundPlayer ->
@@ -112,13 +109,8 @@ public class RoundServiceImpl implements RoundService {
     public boolean joinRound(Round round, Account player, int initialBet) {
         if (round.getRoundPlayerList().size() < Constants.MAX_PLAYER_COUNT)
             if (accountService.canMakeBet(player, initialBet)) {
-                RoundPlayer roundPlayer = new RoundPlayer(round, player);
-
-                roundPlayer.getRoundPlayerCardHandList().add(new RoundPlayerCardHand(roundPlayer, initialBet));
-
-                roundPlayerDao.save(roundPlayer);
-                roundPlayerCardHandDao.save(roundPlayer.getRoundPlayerCardHandList().get(0));
-                round.getRoundPlayerList().add(roundPlayer);
+                accountService.deductChips(player, initialBet);
+                round.getRoundPlayerList().add(roundPlayerService.newRoundPlayer(round, player, initialBet));
 
                 return true;
             }

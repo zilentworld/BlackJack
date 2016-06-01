@@ -1,6 +1,7 @@
 package com.jiro.service;
 
 import com.jiro.model.Account;
+import com.jiro.model.Deck;
 import com.jiro.model.Game;
 import com.jiro.model.Round;
 
@@ -22,5 +23,7 @@ public interface RoundService {
     boolean joinRound (long roundId, long playerId, int initialBet);
 
     Round findById (long roundId);
+
+    void givePlayerCards(Round round, Deck playDeck);
 
 }

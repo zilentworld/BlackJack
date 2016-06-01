@@ -1,5 +1,6 @@
 package com.jiro.service;
 
+import com.jiro.model.RoundPlayer;
 import com.jiro.model.RoundPlayerCardHand;
 
 /**
@@ -12,5 +13,7 @@ public interface RoundPlayerCardHandService {
     RoundPlayerCardHand findById(long roundPlayerCardHandId);
 
     void playDouble(long roundPlayerCardHandId);
+
+    RoundPlayerCardHand newCardHand(RoundPlayer roundPlayer, int betAmount);
 
 }
