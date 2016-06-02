@@ -11,6 +11,7 @@ import com.jiro.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.rmi.RemoteException;
 import java.util.Calendar;
 
 
@@ -26,7 +27,13 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room createNewRoom(long dealerId) {
-        return createNewRoom(accountService.findById(dealerId));
+        try {
+            return createNewRoom(accountService.findById(dealerId));
+        } catch (RemoteException e) {
+            System.out.println("remote exe1");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -44,7 +51,12 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void joinRoom(long roomId, long playerId) {
-        joinRoom(findById(roomId), accountService.findById(playerId));
+        try {
+            joinRoom(findById(roomId), accountService.findById(playerId));
+        } catch (RemoteException e) {
+            System.out.println("remove exe2");
+            e.printStackTrace();
+        }
     }
 
     @Override

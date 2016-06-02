@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -18,14 +19,14 @@
     <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
     <!--<tx:annotation-driven proxy-target-class="true"/>-->
 
-    <!--&lt;!&ndash;<jpa:repositories base-package="com.jiro.dao"/>&ndash;&gt;-->
+    <!--<jpa:repositories base-package="com.jiro.dao"/>-->
 
     <context:annotation-config/>
-    <context:component-scan base-package="com.jiro"/>
+    <!--<context:component-scan base-package="com.jiro"/>-->
 
 
-    <!--&lt;!&ndash;abstract="false"&ndash;&gt;-->
-    <!--&lt;!&ndash;autowire="default"&ndash;&gt;-->
+    <!--abstract="false"-->
+    <!--autowire="default"-->
     <!--<bean id="dataSource"-->
     <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource "-->
     <!--lazy-init="default"-->
@@ -50,10 +51,19 @@
     <!--</props>-->
     <!--</property>-->
     <!--</bean>-->
+    <context:component-scan base-package="com.jiro" />
+    <!--<mvc:annotation-driven />-->
+    <bean name="accountService" class="com.jiro.service.impl.AccountServiceImpl" />
+
+    <bean name="orderExporter"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="accountService" />
+        <property name="serviceInterface" value="com.jiro.service.AccountService" />
+    </bean>
 
     <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
         <property name="serviceName" value="AccountService"/>
-        <property name="service" ref="accountServiceImpl"/>
+        <property name="service" ref="accountService"/>
         <property name="serviceInterface" value="com.jiro.service.AccountService"/>
         <!-- defaults to 1099 -->
         <property name="registryPort" value="1199"/>

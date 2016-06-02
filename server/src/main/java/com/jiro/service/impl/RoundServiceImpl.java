@@ -7,6 +7,7 @@ import com.jiro.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -102,7 +103,13 @@ public class RoundServiceImpl implements RoundService {
 
     @Override
     public boolean joinRound(long roundId, long playerId, int initialBet) {
-        return joinRound(roundDao.findOne(roundId), accountService.findById(playerId), initialBet);
+        try {
+            return joinRound(roundDao.findOne(roundId), accountService.findById(playerId), initialBet);
+        } catch (RemoteException e) {
+            System.out.println("remote exception");
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override

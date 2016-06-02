@@ -2,6 +2,10 @@ package com.jiro.service;
 
 import com.jiro.model.Account;
 
+import java.io.Serializable;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Created by dev-pc on 5/30/16.
  */
@@ -15,5 +19,5 @@ public interface AccountService {
 
     Account createNewDealer(String username, String password);
 
-    Account findById(long accountId);
+    Account findById(long accountId) throws RemoteException;
 }
