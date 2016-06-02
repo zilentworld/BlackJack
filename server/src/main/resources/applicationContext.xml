@@ -9,7 +9,9 @@
 	                    http://www.springframework.org/schema/tx
 	                    http://www.springframework.org/schema/tx/spring-tx.xsd
 					    http://www.springframework.org/schema/context
-					    http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+					    http://www.springframework.org/schema/context/spring-context.xsd
+					    http://www.springframework.org/schema/data/jpa
+					    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
        xmlns:tx="http://www.springframework.org/schema/tx">
 
     <!-- 	settings -->
@@ -25,34 +27,34 @@
     <!--&lt;!&ndash;abstract="false"&ndash;&gt;-->
     <!--&lt;!&ndash;autowire="default"&ndash;&gt;-->
     <!--<bean id="dataSource"-->
-          <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource "-->
-          <!--lazy-init="default"-->
-          <!--p:url="jdbc:mysql://localhost:3306/cms"-->
-          <!--p:driverClassName="com.mysql.jdbc.Driver" p:username="root"-->
-          <!--p:password="12345">-->
+    <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource "-->
+    <!--lazy-init="default"-->
+    <!--p:url="jdbc:mysql://localhost:3306/cms"-->
+    <!--p:driverClassName="com.mysql.jdbc.Driver" p:username="root"-->
+    <!--p:password="12345">-->
     <!--</bean>-->
 
     <!--<bean id="transactionManager"-->
-          <!--class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
-        <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
+    <!--<property name="sessionFactory" ref="sessionFactory"/>-->
     <!--</bean>-->
 
     <!--<bean id="sessionFactory"-->
-          <!--class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" p:dataSource-ref="dataSource">-->
-        <!--<property name="packagesToScan" value="com.jiro.model"/>-->
-        <!--&lt;!&ndash;<property name="autostart" value="true"/>&ndash;&gt;-->
-        <!--<property name="hibernateProperties">-->
-            <!--<props>-->
-                <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
-                <!--<prop key="hibernate.show_sql">true</prop>-->
-            <!--</props>-->
-        <!--</property>-->
+    <!--class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" p:dataSource-ref="dataSource">-->
+    <!--<property name="packagesToScan" value="com.jiro.model"/>-->
+    <!--&lt;!&ndash;<property name="autostart" value="true"/>&ndash;&gt;-->
+    <!--<property name="hibernateProperties">-->
+    <!--<props>-->
+    <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
+    <!--<prop key="hibernate.show_sql">true</prop>-->
+    <!--</props>-->
+    <!--</property>-->
     <!--</bean>-->
 
     <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
-        <property name="serviceName" value="AccountService" />
+        <property name="serviceName" value="AccountService"/>
         <property name="service" ref="accountServiceImpl"/>
-        <property name="serviceInterface" value="com.jiro.service.AccountService" />
+        <property name="serviceInterface" value="com.jiro.service.AccountService"/>
         <!-- defaults to 1099 -->
         <property name="registryPort" value="1199"/>
     </bean>
