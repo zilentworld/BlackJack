@@ -19,10 +19,10 @@
     <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
     <!--<tx:annotation-driven proxy-target-class="true"/>-->
 
-    <!--<jpa:repositories base-package="com.jiro.dao"/>-->
+    <jpa:repositories base-package="com.jiro.dao"/>
 
     <context:annotation-config/>
-    <!--<context:component-scan base-package="com.jiro"/>-->
+    <context:component-scan base-package="com.jiro"/>
 
 
     <!--abstract="false"-->
@@ -55,11 +55,22 @@
     <!--<mvc:annotation-driven />-->
     <bean name="accountService" class="com.jiro.service.impl.AccountServiceImpl" />
 
-    <bean name="orderExporter"
-          class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-        <property name="service" ref="accountService" />
-        <property name="serviceInterface" value="com.jiro.service.AccountService" />
-    </bean>
+    <!--<bean name="orderExporter"-->
+          <!--class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">-->
+        <!--<property name="service" ref="accountService" />-->
+        <!--<property name="serviceInterface" value="com.jiro.service.AccountService" />-->
+    <!--</bean>-->
+
+
+    <!--<bean id="viewResolver"-->
+          <!--class="org.springframework.web.servlet.view.InternalResourceViewResolver" >-->
+        <!--<property name="prefix">-->
+            <!--<value>/WEB-INF/jsp2/</value>-->
+        <!--</property>-->
+        <!--<property name="suffix">-->
+            <!--<value>.jsp</value>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
         <property name="serviceName" value="AccountService"/>

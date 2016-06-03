@@ -12,23 +12,12 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-//@SpringBootApplication
-@ImportResource(value = { "classpath:applicationContext.xml"})
-@ComponentScan({"com.jiro"})
-@Configuration
-@EnableAutoConfiguration
-@EnableWebMvc
+@SpringBootApplication
+@ImportResource({"classpath:applicationContext.xml"})
 public class BlackJackMain
-//        extends SpringBootServletInitializer
 {
 
-//    @Override
-//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//        return application.sources(BlackJackMain.class);
-//    }
-
     public static void main(String[] args) {
-//        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         SpringApplication.run(BlackJackMain.class, args);
     }
 
