@@ -10,9 +10,6 @@ import com.jiro.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
-import java.rmi.RemoteException;
-
 /**
  * Created by dev-pc on 5/30/16.
  */
@@ -28,16 +25,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deductChips(Account player, int betAmount) {
-        if (canMakeBet(player, betAmount)) {
-            player.setTotalChips(player.getTotalChips() - betAmount);
+    public void deductChips(Account player, int chipAmount) {
+        if (chipAmount > 0)
+            if (canMakeBet(player, chipAmount)) {
+                player.setTotalChips(player.getTotalChips() - chipAmount);
+            }
+    }
+
+    @Override
+    public void increaseChips(Account player, int chipAmount) {
+        if (chipAmount > 0) {
+            player.setTotalChips(player.getTotalChips() + chipAmount);
+            accountDao.save(player);
         }
     }
 
     @Override
     public Account createNewPlayer(String username, String password, Integer initialChips) {
         Account player = createNewAccount(username, password, PLAYER);
-        if(initialChips != null && initialChips > 0)
+        if (initialChips != null && initialChips > 0)
             player.setTotalChips(initialChips);
         else
             player.setTotalChips(Constants.INITIAL_CHIP_AMOUNT);
@@ -73,5 +79,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findById(long accountId) {
         return accountDao.findOne(accountId);
+    }
+
+    @Override
+    public void saveAccount(Account account) {
+        accountDao.save(account);
     }
 }

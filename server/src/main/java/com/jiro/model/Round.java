@@ -104,6 +104,8 @@ public class Round {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Dealer: " + getDealerHand().toString() + "\n");
+        sb.append("Dealer Card Value: " + getDealerHand().getHandValue() + "\n");
+        sb.append("\n");
         sb.append("Players:" + "\n");
         roundPlayerList.forEach(roundPlayer -> sb.append(roundPlayer.toString() + "\n"));
 

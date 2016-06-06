@@ -26,4 +26,8 @@ public interface RoundService {
 
     void givePlayerCards(Round round, Deck playDeck);
 
+    void finishDealerHand(long roundId);
+
+    void finishRound(long roundId);
+
 }

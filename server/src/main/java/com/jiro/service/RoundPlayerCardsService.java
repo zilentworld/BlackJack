@@ -8,7 +8,7 @@ import com.jiro.model.RoundPlayerCardHand;
  */
 public interface RoundPlayerCardsService {
 
-    void savePlayerCards(RoundPlayerCardHand roundPlayerCardHand);
+    void saveRoundPlayerCardHand(RoundPlayerCardHand roundPlayerCardHand);
 
     void addPlayerCard(RoundPlayerCardHand roundPlayerCardHand, Card card);
 

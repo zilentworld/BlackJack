@@ -24,7 +24,7 @@ public class RoundPlayerCardsServiceImpl implements RoundPlayerCardsService {
 
 
     @Override
-    public void savePlayerCards(RoundPlayerCardHand roundPlayerCardHand) {
+    public void saveRoundPlayerCardHand(RoundPlayerCardHand roundPlayerCardHand) {
         CardHand cardHand = roundPlayerCardHand.getCardHand();
         cardHand.getCards().forEach(card -> roundPlayerCardsDao.save(new RoundPlayerCards(roundPlayerCardHand, card.toDbFormat())));
 

@@ -2,6 +2,7 @@ package com.jiro.service.impl;
 
 import com.jiro.dao.RoundPlayerCardHandDao;
 import com.jiro.dao.RoundPlayerCardsDao;
+import com.jiro.enums.CardHandStatus;
 import com.jiro.model.*;
 import com.jiro.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +48,15 @@ public class RoundPlayerCardHandServiceImpl implements RoundPlayerCardHandServic
         Deck deck = new Deck(gameDeck);
         int betAmount = r.getBetAmount();
 
-        if(accountService.canMakeBet(player, betAmount)) {
+        if (accountService.canMakeBet(player, betAmount)) {
             accountService.deductChips(player, betAmount);
             r.setBetAmount(betAmount * 2);
             Card newCard = cardHandService.addCard(r.getCardHand(), deck, true);
             roundPlayerCardsService.addPlayerCard(r, newCard);
             gameDeckService.updateGameDeck(gameDeck, deck);
         }
+
+        updateCardHandStatus(r);
     }
 
     @Override
@@ -66,11 +69,14 @@ public class RoundPlayerCardHandServiceImpl implements RoundPlayerCardHandServic
         Card newCard = cardHandService.addCard(r.getCardHand(), deck, true);
         roundPlayerCardsService.addPlayerCard(r, newCard);
         gameDeckService.updateGameDeck(gameDeck, deck);
+
+        updateCardHandStatus(r);
     }
 
     @Override
     public void playStand(long roundPlayerCardHandId) {
         RoundPlayerCardHand r = findById(roundPlayerCardHandId);
+        r.setCardHandStatus(CardHandStatus.WAITING);
     }
 
     @Override
@@ -78,4 +84,16 @@ public class RoundPlayerCardHandServiceImpl implements RoundPlayerCardHandServic
         return roundPlayerCardHandDao.save(new RoundPlayerCardHand(roundPlayer, betAmount));
     }
 
+    @Override
+    public void updateCardHandStatus(RoundPlayerCardHand roundPlayerCardHand) {
+        int cardTotal = roundPlayerCardHand.getCardHandCount();
+        if(cardTotal < 21)
+            roundPlayerCardHand.setCardHandStatus(CardHandStatus.PLAYING);
+        else if(cardTotal == 21 && roundPlayerCardHand.getCardHand().getCards().size() == 2)
+            roundPlayerCardHand.setCardHandStatus(CardHandStatus.BLACKJACK);
+        else
+            roundPlayerCardHand.setCardHandStatus(CardHandStatus.LOST);
+
+        roundPlayerCardHandDao.save(roundPlayerCardHand);
+    }
 }

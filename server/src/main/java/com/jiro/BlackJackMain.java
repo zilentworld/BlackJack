@@ -14,8 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @ImportResource({"classpath:applicationContext.xml"})
-public class BlackJackMain
-{
+public class BlackJackMain {
 
     public static void main(String[] args) {
         SpringApplication.run(BlackJackMain.class, args);

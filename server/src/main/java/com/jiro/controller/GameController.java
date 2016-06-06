@@ -7,6 +7,7 @@ import com.jiro.service.impl.RoundPlayerCardHandServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -189,6 +190,21 @@ public class GameController {
         model.addAttribute("result2", round.getGame().getPlayDeck().toString());
 
         System.out.println("result1"+ roundPlayerCardHandService.findById(roundCardHandId).getRoundPlayer().getRound().toString());
+
+        return "test";
+    }
+
+    @RequestMapping("/dealerTurn")
+    @ResponseBody
+    public String dealerTurn(@RequestParam(required = true) long roundId, ModelMap model) {
+        System.out.println("dealer turn");
+        roundService.finishDealerHand(roundId);
+        Round round = roundService.findById(roundId);
+        model.addAttribute("result1", round.toString());
+        System.out.println(round.toString());
+
+        roundService.finishRound(roundId);
+        System.out.println(round.toString());
 
         return "test";
     }

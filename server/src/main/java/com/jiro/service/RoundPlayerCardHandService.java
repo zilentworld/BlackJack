@@ -20,4 +20,6 @@ public interface RoundPlayerCardHandService {
 
     RoundPlayerCardHand newCardHand(RoundPlayer roundPlayer, int betAmount);
 
+    void updateCardHandStatus(RoundPlayerCardHand roundPlayerCardHand);
+
 }

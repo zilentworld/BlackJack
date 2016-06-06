@@ -1,5 +1,7 @@
 package com.jiro.model;
 
+import com.jiro.enums.CardHandStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  */
 public class CardHand {
 
+    private CardHandStatus cardHandStatus;
     private List<Card> cards;
 
     public List<Card> getCards() {
@@ -22,8 +25,15 @@ public class CardHand {
         this.cards = cards;
     }
 
-    public CardHand() {
+    public CardHandStatus getCardHandStatus() {
+        return cardHandStatus;
     }
+
+    public void setCardHandStatus(CardHandStatus cardHandStatus) {
+        this.cardHandStatus = cardHandStatus;
+    }
+
+    public CardHand() {}
 
     public CardHand(List<Card> cards) {
         this.cards = cards;

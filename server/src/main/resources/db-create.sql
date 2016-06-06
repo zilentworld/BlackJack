@@ -37,31 +37,35 @@ CREATE TABLE room_player_list
 );
 CREATE TABLE round
 (
-    roundId BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    round_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     game_id BIGINT(20),
     dealer_id BIGINT(20)
 );
 CREATE TABLE round_dealer_cards
 (
-    round_dealer_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    roundId BIGINT(20),
-    card_symbol VARCHAR(5)
+    round_card_list_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    round_id BIGINT(20),
+    card_symbol VARCHAR(5),
+    dealer_id BIGINT(20)
 );
 CREATE TABLE round_player
 (
     round_player_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    roundId BIGINT(20),
+    round_id BIGINT(20),
     player_id BIGINT(20)
 );
 CREATE TABLE round_player_card_hand
 (
     round_card_hand_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     round_player_id BIGINT(20),
-    bet_amount INT(11)
+    bet_amount INT(11),
+    card_hand_status VARCHAR(20),
+    card_hand_count INT(11)
 );
 CREATE TABLE round_player_cards
 (
     round_card_list_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     round_card_hand_id BIGINT(20),
-    card_symbol VARCHAR(5)
+    card_symbol VARCHAR(5),
+    round_player_id BIGINT(20)
 );

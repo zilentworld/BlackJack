@@ -1,6 +1,6 @@
 package com.jiro.model;
 
-import com.jiro.enums.RoundCardHandStatus;
+import com.jiro.enums.CardHandStatus;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class RoundPlayerCardHand {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "card_hand_status")
-    private RoundCardHandStatus roundCardHandStatus;
+    private CardHandStatus cardHandStatus;
 
     public long getRoundCardHandId() {
         return roundCardHandId;
@@ -90,12 +90,12 @@ public class RoundPlayerCardHand {
         this.cardHand = cardHand;
     }
 
-    public RoundCardHandStatus getRoundCardHandStatus() {
-        return roundCardHandStatus;
+    public CardHandStatus getCardHandStatus() {
+        return cardHandStatus;
     }
 
-    public void setRoundCardHandStatus(RoundCardHandStatus roundCardHandStatus) {
-        this.roundCardHandStatus = roundCardHandStatus;
+    public void setCardHandStatus(CardHandStatus cardHandStatus) {
+        this.cardHandStatus = cardHandStatus;
     }
 
     public List<RoundPlayerCards> getRoundPlayerCardsList() {
@@ -107,6 +107,9 @@ public class RoundPlayerCardHand {
     }
 
     public int getCardHandCount() {
+        if(cardHandCount == 0 && cardHand != null && cardHand.getCards().size() > 0) {
+            cardHandCount = cardHand.getHandValue();
+        }
         return cardHandCount;
     }
 
@@ -120,8 +123,9 @@ public class RoundPlayerCardHand {
 //        sb.append("Player Name: " + roundPlayer.getPlayer().getUsername());
         sb.append("RoundCardHandId:" + roundCardHandId + "\n");
         sb.append("CardHand: " + getCardHand().toString() + "\n");
-        sb.append("Card Value: " + cardHandCount + "\n");
+        sb.append("Card Value: " + getCardHandCount() + "\n");
         sb.append("Bet amount: " + betAmount + "\n");
+        sb.append("CardHandStatus: " + cardHandStatus);
 
         return sb.toString();
     }
@@ -132,6 +136,6 @@ public class RoundPlayerCardHand {
     public RoundPlayerCardHand(RoundPlayer roundPlayer, int betAmount) {
         this.roundPlayer = roundPlayer;
         this.betAmount = betAmount;
-        this.roundCardHandStatus = RoundCardHandStatus.WAITING;
+        this.cardHandStatus = CardHandStatus.PLAYING;
     }
 }

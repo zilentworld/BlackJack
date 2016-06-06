@@ -79,6 +79,7 @@ public class RoundPlayer {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Player Name:" + player.getUsername() + "\n");
+        sb.append("Current Chip Amount: " + getPlayer().getTotalChips());
         roundPlayerCardHandList.forEach(roundPlayerCardHand -> sb.append(roundPlayerCardHand.toString()));
 
         return sb.toString();

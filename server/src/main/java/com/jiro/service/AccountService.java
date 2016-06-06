@@ -13,11 +13,15 @@ public interface AccountService {
 
     boolean canMakeBet(Account player, int betAmount);
 
-    void deductChips(Account player, int betAmount);
+    void deductChips(Account player, int chipAmount);
+
+    void increaseChips(Account player, int chipAmount);
 
     Account createNewPlayer(String username, String password, Integer initialChips);
 
     Account createNewDealer(String username, String password);
 
     Account findById(long accountId) throws RemoteException;
+
+    void saveAccount(Account account);
 }

@@ -2,10 +2,11 @@ package com.jiro.service.impl;
 
 import com.jiro.constants.Constants;
 import com.jiro.dao.RoundDao;
+import com.jiro.enums.CardHandStatus;
+import com.jiro.enums.WinType;
 import com.jiro.model.*;
 import com.jiro.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.rmi.RemoteException;
@@ -99,7 +100,7 @@ public class RoundServiceImpl implements RoundService {
             System.out.println("save player cards");
             roundPlayerList.forEach(roundPlayer ->
                     roundPlayer.getRoundPlayerCardHandList().forEach(roundPlayerCardHand ->
-                            roundPlayerCardsService.savePlayerCards(roundPlayerCardHand)
+                            roundPlayerCardsService.saveRoundPlayerCardHand(roundPlayerCardHand)
                     )
             );
 
@@ -150,5 +151,88 @@ public class RoundServiceImpl implements RoundService {
     @Override
     public Round findById(long roundId) {
         return roundDao.findOne(roundId);
+    }
+
+    @Override
+    public void finishDealerHand(long roundId) {
+        Round round = roundDao.findOne(roundId);
+        CardHand cardHand = round.getDealerHand();
+        cardHand.getCards().forEach(card -> card.setVisible(true));
+        while (cardHand.getHandValue() < 17) {
+            roundDealerCardsService.addDealerCard(
+                    round, cardHandService.addCard(cardHand, round.getGame().getPlayDeck(), true)
+            );
+        }
+    }
+
+    @Override
+    public void finishRound(long roundId) {
+        Round round = roundDao.findOne(roundId);
+        round.getRoundPlayerList().forEach(roundPlayer ->
+                roundPlayer.getRoundPlayerCardHandList().forEach(
+                        roundPlayerCardHand -> updateWinLoss(roundPlayerCardHand, round)
+                )
+        );
+    }
+
+    private void updateWinLoss(RoundPlayerCardHand roundPlayerCardHand, Round round) {
+        Account player = roundPlayerCardHand.getRoundPlayer().getPlayer();
+        int betAmount = roundPlayerCardHand.getBetAmount();
+        int chipsEarned;
+        switch (updateCardHandStatus(roundPlayerCardHand, round.getDealerHand())) {
+            case PLAYER_BLACKJACK:
+                chipsEarned = amountWon(betAmount, Constants.BLACKJACK_PAYOUT);
+                break;
+            case PLAYER_WIN:
+                chipsEarned = amountWon(betAmount, Constants.DEFAULT_PAYOUT);
+                break;
+            case BLACKJACK_PUSH:
+            case PUSH:
+                chipsEarned = betAmount;
+                break;
+            default:
+                chipsEarned = 0;
+        }
+        accountService.increaseChips(player, chipsEarned);
+    }
+
+    private int amountWon(int betAmount, double multiplier) {
+        return betAmount + (int) (betAmount * multiplier);
+    }
+
+    private WinType updateCardHandStatus(RoundPlayerCardHand roundPlayerCardHand, CardHand dealerHand) {
+        WinType winType;
+        CardHand playerCardHand = roundPlayerCardHand.getCardHand();
+        int playerCardCount = roundPlayerCardHand.getCardHandCount();
+        int dealerCardCount = dealerHand.getHandValue();
+        if (roundPlayerCardHand.getCardHandStatus() == CardHandStatus.LOST)
+            winType = WinType.DEALER_WIN;
+        else {
+            if (dealerCardCount == 21 && playerCardCount == 21
+                    && dealerHand.getCards().size() == 2
+                    && playerCardHand.getCards().size() == 2) {
+                roundPlayerCardHand.setCardHandStatus(CardHandStatus.PUSH);
+                winType = WinType.BLACKJACK_PUSH;
+            } else if (dealerCardCount == 21 && dealerHand.getCards().size() == 2) {
+                roundPlayerCardHand.setCardHandStatus(CardHandStatus.LOST);
+                winType = WinType.DEALER_BLACKJACK;
+            } else if (playerCardCount == 21 && playerCardHand.getCards().size() == 2) {
+                roundPlayerCardHand.setCardHandStatus(CardHandStatus.BLACKJACK);
+                winType = WinType.PLAYER_BLACKJACK;
+            } else if (dealerCardCount == playerCardCount) {
+                roundPlayerCardHand.setCardHandStatus(CardHandStatus.PUSH);
+                winType = WinType.PUSH;
+            } else if (playerCardCount > dealerCardCount && playerCardCount <= 21) {
+                roundPlayerCardHand.setCardHandStatus(CardHandStatus.WON);
+                winType = WinType.PLAYER_WIN;
+            } else if (playerCardCount < dealerCardCount && dealerCardCount <= 21) {
+                roundPlayerCardHand.setCardHandStatus(CardHandStatus.LOST);
+                winType = WinType.DEALER_WIN;
+            } else
+                winType = WinType.PUSH;
+        }
+
+        roundPlayerCardsService.saveRoundPlayerCardHand(roundPlayerCardHand);
+        return winType;
     }
 }
