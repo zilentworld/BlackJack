@@ -3,6 +3,8 @@ package com.jiro.model;
 import com.jiro.enums.RoundCardHandStatus;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dev-pc on 5/30/16.
@@ -23,10 +25,17 @@ public class RoundPlayerCardHand {
     @Column(name = "bet_amount")
     private int betAmount;
 
+    @Column(name = "card_hand_count")
+    private int cardHandCount;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roundPlayerCardHand")
+    private List<RoundPlayerCards> roundPlayerCardsList;
+
     @Transient
     private CardHand cardHand;
 
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name = "card_hand_status")
     private RoundCardHandStatus roundCardHandStatus;
 
     public long getRoundCardHandId() {
@@ -53,9 +62,27 @@ public class RoundPlayerCardHand {
         this.betAmount = betAmount;
     }
 
+//    public String getCardHandStatus() {
+//        return cardHandStatus;
+//    }
+//
+//    public void setCardHandStatus(String cardHandStatus) {
+//        this.cardHandStatus = cardHandStatus;
+//    }
+
     public CardHand getCardHand() {
-        if(cardHand == null)
-            cardHand = new CardHand();
+        if (cardHand == null) {
+            if (roundPlayerCardsList == null || roundPlayerCardsList.size() <= 0) {
+                System.out.println("round player null or 0");
+                cardHand = new CardHand();
+            }
+            else {
+                System.out.println("cards list");
+                List<Card> cards = new ArrayList<>();
+                roundPlayerCardsList.forEach(roundPlayerCards -> cards.add(new Card(roundPlayerCards.getCardSymbol())));
+                cardHand = new CardHand(cards);
+            }
+        }
         return cardHand;
     }
 
@@ -71,23 +98,40 @@ public class RoundPlayerCardHand {
         this.roundCardHandStatus = roundCardHandStatus;
     }
 
+    public List<RoundPlayerCards> getRoundPlayerCardsList() {
+        return roundPlayerCardsList;
+    }
+
+    public void setRoundPlayerCardsList(List<RoundPlayerCards> roundPlayerCardsList) {
+        this.roundPlayerCardsList = roundPlayerCardsList;
+    }
+
+    public int getCardHandCount() {
+        return cardHandCount;
+    }
+
+    public void setCardHandCount(int cardHandCount) {
+        this.cardHandCount = cardHandCount;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 //        sb.append("Player Name: " + roundPlayer.getPlayer().getUsername());
-        sb.append("RoundCardHandId:"+ roundCardHandId);
-        sb.append("CardHand: " + cardHand.toString() + "\n");
+        sb.append("RoundCardHandId:" + roundCardHandId + "\n");
+        sb.append("CardHand: " + getCardHand().toString() + "\n");
+        sb.append("Card Value: " + cardHandCount + "\n");
         sb.append("Bet amount: " + betAmount + "\n");
 
         return sb.toString();
     }
 
-    public RoundPlayerCardHand() {}
+    public RoundPlayerCardHand() {
+    }
 
     public RoundPlayerCardHand(RoundPlayer roundPlayer, int betAmount) {
         this.roundPlayer = roundPlayer;
         this.betAmount = betAmount;
         this.roundCardHandStatus = RoundCardHandStatus.WAITING;
     }
-
 }

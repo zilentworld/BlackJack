@@ -58,6 +58,22 @@ public enum CardNumber {
         }
     }
 
+    public int getHardValue() {
+        return hardValue;
+    }
+
+    public void setHardValue(int hardValue) {
+        this.hardValue = hardValue;
+    }
+
+    public int getSoftValue() {
+        return softValue;
+    }
+
+    public void setSoftValue(int softValue) {
+        this.softValue = softValue;
+    }
+
     public static CardNumber findBySymbol(String symbol) {
         return map.get(symbol);
     }

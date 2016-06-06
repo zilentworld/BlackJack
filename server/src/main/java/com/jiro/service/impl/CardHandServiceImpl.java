@@ -1,9 +1,17 @@
 package com.jiro.service.impl;
 
+import com.jiro.model.Card;
 import com.jiro.model.CardHand;
 import com.jiro.model.Deck;
+import com.jiro.model.RoundDealerCards;
 import com.jiro.service.CardHandService;
+import com.jiro.service.RoundDealerCardsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dev-pc on 5/30/16.
@@ -12,7 +20,10 @@ import org.springframework.stereotype.Service;
 public class CardHandServiceImpl implements CardHandService {
 
     @Override
-    public void addCard(CardHand cardHand, Deck deck, boolean isVisible) {
-        cardHand.getCards().add(deck.getCard(isVisible));
+    public Card addCard(CardHand cardHand, Deck deck, boolean isVisible) {
+        Card c = deck.getCard(isVisible);
+        cardHand.getCards().add(c);
+        return c;
     }
+
 }

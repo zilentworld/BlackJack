@@ -27,10 +27,10 @@ public class Round {
     @Transient
     private CardHand dealerHand;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "round")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "round")
     private List<RoundPlayer> roundPlayerList;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "round")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "round")
     private List<RoundDealerCards> roundDealerCardsList;
 
     public long getRoundId() {
@@ -50,7 +50,7 @@ public class Round {
     }
 
     public List<RoundPlayer> getRoundPlayerList() {
-        if(roundPlayerList == null)
+        if (roundPlayerList == null)
             roundPlayerList = new ArrayList<>();
         return roundPlayerList;
     }
@@ -68,8 +68,15 @@ public class Round {
     }
 
     public CardHand getDealerHand() {
-        if(dealerHand == null)
-            dealerHand = new CardHand();
+        if (dealerHand == null) {
+            if (roundDealerCardsList.size() > 0) {
+                List<Card> cards = new ArrayList<>();
+                roundDealerCardsList.forEach(roundDealerCards -> cards.add(roundDealerCards.getAsCard()));
+                dealerHand = new CardHand(cards);
+            } else {
+                dealerHand = new CardHand();
+            }
+        }
 
         return dealerHand;
     }
@@ -96,7 +103,7 @@ public class Round {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Dealer: " + dealerHand.toString() + "\n");
+        sb.append("Dealer: " + getDealerHand().toString() + "\n");
         sb.append("Players:" + "\n");
         roundPlayerList.forEach(roundPlayer -> sb.append(roundPlayer.toString() + "\n"));
 

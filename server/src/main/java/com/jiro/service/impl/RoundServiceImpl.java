@@ -5,6 +5,7 @@ import com.jiro.dao.RoundDao;
 import com.jiro.model.*;
 import com.jiro.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.rmi.RemoteException;
@@ -28,6 +29,10 @@ public class RoundServiceImpl implements RoundService {
     private GameDeckService gameDeckService;
     @Autowired
     private RoundPlayerService roundPlayerService;
+    @Autowired
+    private RoundDealerCardsService roundDealerCardsService;
+    @Autowired
+    private RoundPlayerCardsService roundPlayerCardsService;
 
 
     @Override
@@ -65,11 +70,11 @@ public class RoundServiceImpl implements RoundService {
     @Override
     public void distributeInitialCards(Round round) {
         List<RoundPlayer> roundPlayerList = round.getRoundPlayerList();
-        System.out.println("initialCards:"+roundPlayerList.size());
+        System.out.println("initialCards:" + roundPlayerList.size());
         if (roundPlayerList.size() > 0) {
             Deck playDeck = round.getGame().getPlayDeck();
 
-            if(playDeck == null) {
+            if (playDeck == null) {
                 System.out.println("deck is NULL");
                 playDeck = gameDeckService.getDeck(round.getGame().getGameDeck().getDeckId());
             }
@@ -88,7 +93,19 @@ public class RoundServiceImpl implements RoundService {
 
             gameDeckService.updateGameDeck(round.getGame().getGameDeck(), playDeck);
 
+            System.out.println("save dealer card");
+            roundDealerCardsService.saveDealerCards(round);
+
+            System.out.println("save player cards");
+            roundPlayerList.forEach(roundPlayer ->
+                    roundPlayer.getRoundPlayerCardHandList().forEach(roundPlayerCardHand ->
+                            roundPlayerCardsService.savePlayerCards(roundPlayerCardHand)
+                    )
+            );
+
             round.getGame().setPlayDeck(playDeck);
+        } else {
+            System.out.println("EMPTY ROUND");
         }
     }
 
@@ -97,8 +114,9 @@ public class RoundServiceImpl implements RoundService {
         List<RoundPlayer> roundPlayerList = round.getRoundPlayerList();
         roundPlayerList.forEach(roundPlayer ->
                 cardHandService.addCard(
-                        roundPlayer.getRoundPlayerCardHandList().get(0).getCardHand()
-                        , playDeck, true));
+                        roundPlayer.getRoundPlayerCardHandList().get(0).getCardHand(),
+                        playDeck, true)
+        );
     }
 
     @Override
@@ -114,13 +132,17 @@ public class RoundServiceImpl implements RoundService {
 
     @Override
     public boolean joinRound(Round round, Account player, int initialBet) {
-        if (round.getRoundPlayerList().size() < Constants.MAX_PLAYER_COUNT)
+        System.out.println("join round");
+        if (round.getRoundPlayerList().size() < Constants.MAX_PLAYER_COUNT) {
             if (accountService.canMakeBet(player, initialBet)) {
                 accountService.deductChips(player, initialBet);
                 round.getRoundPlayerList().add(roundPlayerService.newRoundPlayer(round, player, initialBet));
 
                 return true;
-            }
+            } else
+                System.out.println("Player is poor");
+        } else
+            System.out.println("Room is Full");
 
         return false;
     }

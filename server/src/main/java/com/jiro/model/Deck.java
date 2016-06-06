@@ -100,7 +100,7 @@ public class Deck {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         cardList.forEach(card -> {
-            System.out.println(card);
+//            System.out.println(card);
             sb.append(card + "\n");
         });
         return sb.toString();

@@ -34,8 +34,7 @@ public class Card {
         isVisible = visible;
     }
 
-    public Card() {
-    }
+    public Card() {}
 
     public Card(CardNumber cardNumber, CardSuit cardSuit) {
         this.cardNumber = cardNumber;
@@ -76,5 +75,13 @@ public class Card {
 
     public String toDbFormat() {
         return cardNumber.getSymbol() + "!" + cardSuit.getSymbol();
+    }
+
+    public int getSoftValue() {
+        return cardNumber.getSoftValue();
+    }
+
+    public int getHardValue() {
+        return cardNumber.getHardValue();
     }
 }

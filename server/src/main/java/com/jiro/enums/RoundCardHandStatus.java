@@ -5,14 +5,10 @@ package com.jiro.enums;
  */
 public enum RoundCardHandStatus {
 
-    WAITING("waiting"),
-    PLAYING("playing"),
-    LOST("lost"),
-    WON("won");
+    WAITING,
+    PLAYING,
+    LOST,
+    WON,
+    BLACKJACK;
 
-    private String status;
-
-    RoundCardHandStatus(String status) {
-        this.status = status;
-    }
 }

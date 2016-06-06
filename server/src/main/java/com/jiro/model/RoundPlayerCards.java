@@ -18,11 +18,18 @@ public class RoundPlayerCards {
 //    @JoinColumn(name = "round_id")
 //    private Round round;
 
-    @Column(name = "round_card_hand_id")
-    private long round_card_hand_id;
+//    @Column(name = "round_card_hand_id")
+//    private long round_card_hand_id;
+
+    @ManyToOne
+    @JoinColumn(name = "round_card_hand_id")
+    private RoundPlayerCardHand roundPlayerCardHand;
 
     @Column(name = "card_symbol")
     private String cardSymbol;
+
+    @Column(name = "round_player_id")
+    private long roundPlayerId;
 
     public long getRoundCardListId() {
         return roundCardListId;
@@ -41,12 +48,37 @@ public class RoundPlayerCards {
 //    }
 
 
-    public long getRound_card_hand_id() {
-        return round_card_hand_id;
+    public RoundPlayerCards() {}
+
+    public RoundPlayerCards(RoundPlayerCardHand roundPlayerCardHand, String cardSymbol) {
+        this.roundPlayerCardHand = roundPlayerCardHand;
+        this.roundPlayerId = roundPlayerCardHand.getRoundPlayer().getPlayer().getId();
+        this.cardSymbol = cardSymbol;
     }
 
-    public void setRound_card_hand_id(long round_card_hand_id) {
-        this.round_card_hand_id = round_card_hand_id;
+//    public long getRound_card_hand_id() {
+//        return round_card_hand_id;
+//    }
+//
+//    public void setRound_card_hand_id(long round_card_hand_id) {
+//        this.round_card_hand_id = round_card_hand_id;
+//    }
+
+
+    public long getRoundPlayerId() {
+        return roundPlayerId;
+    }
+
+    public void setRoundPlayerId(long roundPlayerId) {
+        this.roundPlayerId = roundPlayerId;
+    }
+
+    public RoundPlayerCardHand getRoundPlayerCardHand() {
+        return roundPlayerCardHand;
+    }
+
+    public void setRoundPlayerCardHand(RoundPlayerCardHand roundPlayerCardHand) {
+        this.roundPlayerCardHand = roundPlayerCardHand;
     }
 
     public String getCardSymbol() {

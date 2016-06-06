@@ -50,6 +50,9 @@ public class Game {
     }
 
     public Deck getPlayDeck() {
+        if(playDeck == null)
+            playDeck = new Deck(gameDeck);
+
         return playDeck;
     }
 

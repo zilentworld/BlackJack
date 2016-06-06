@@ -37,20 +37,20 @@ CREATE TABLE room_player_list
 );
 CREATE TABLE round
 (
-    round_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    roundId BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
     game_id BIGINT(20),
     dealer_id BIGINT(20)
 );
 CREATE TABLE round_dealer_cards
 (
     round_dealer_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    round_id BIGINT(20),
+    roundId BIGINT(20),
     card_symbol VARCHAR(5)
 );
 CREATE TABLE round_player
 (
     round_player_id BIGINT(20) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    round_id BIGINT(20),
+    roundId BIGINT(20),
     player_id BIGINT(20)
 );
 CREATE TABLE round_player_card_hand

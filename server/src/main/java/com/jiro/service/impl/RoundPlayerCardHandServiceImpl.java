@@ -1,12 +1,11 @@
 package com.jiro.service.impl;
 
 import com.jiro.dao.RoundPlayerCardHandDao;
+import com.jiro.dao.RoundPlayerCardsDao;
 import com.jiro.model.*;
-import com.jiro.service.AccountService;
-import com.jiro.service.CardHandService;
-import com.jiro.service.GameDeckService;
-import com.jiro.service.RoundPlayerCardHandService;
+import com.jiro.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.rmi.RemoteException;
@@ -25,6 +24,8 @@ public class RoundPlayerCardHandServiceImpl implements RoundPlayerCardHandServic
     private CardHandService cardHandService;
     @Autowired
     private GameDeckService gameDeckService;
+    @Autowired
+    private RoundPlayerCardsService roundPlayerCardsService;
 
 
     @Override
@@ -40,20 +41,41 @@ public class RoundPlayerCardHandServiceImpl implements RoundPlayerCardHandServic
     @Override
     public void playDouble(long roundPlayerCardHandId) {
         RoundPlayerCardHand r = findById(roundPlayerCardHandId);
-        Account player = r.getRoundPlayer().getPlayer();
-        GameDeck gameDeck = r.getRoundPlayer().getRound().getGame().getGameDeck();
+        RoundPlayer rp = r.getRoundPlayer();
+        Account player = rp.getPlayer();
+        GameDeck gameDeck = rp.getRound().getGame().getGameDeck();
         Deck deck = new Deck(gameDeck);
         int betAmount = r.getBetAmount();
+
         if(accountService.canMakeBet(player, betAmount)) {
             accountService.deductChips(player, betAmount);
             r.setBetAmount(betAmount * 2);
-            cardHandService.addCard(r.getCardHand(), deck, true);
+            Card newCard = cardHandService.addCard(r.getCardHand(), deck, true);
+            roundPlayerCardsService.addPlayerCard(r, newCard);
             gameDeckService.updateGameDeck(gameDeck, deck);
         }
+    }
+
+    @Override
+    public void playHit(long roundPlayerCardHandId) {
+        RoundPlayerCardHand r = findById(roundPlayerCardHandId);
+        RoundPlayer rp = r.getRoundPlayer();
+        GameDeck gameDeck = rp.getRound().getGame().getGameDeck();
+        Deck deck = new Deck(gameDeck);
+
+        Card newCard = cardHandService.addCard(r.getCardHand(), deck, true);
+        roundPlayerCardsService.addPlayerCard(r, newCard);
+        gameDeckService.updateGameDeck(gameDeck, deck);
+    }
+
+    @Override
+    public void playStand(long roundPlayerCardHandId) {
+        RoundPlayerCardHand r = findById(roundPlayerCardHandId);
     }
 
     @Override
     public RoundPlayerCardHand newCardHand(RoundPlayer roundPlayer, int betAmount) {
         return roundPlayerCardHandDao.save(new RoundPlayerCardHand(roundPlayer, betAmount));
     }
+
 }

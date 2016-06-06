@@ -35,9 +35,9 @@ public class RoundPlayerServiceImpl implements RoundPlayerService {
 
         RoundPlayer roundPlayer = new RoundPlayer(round, player);
 
-        roundPlayer.getRoundPlayerCardHandList().add(roundPlayerCardHandService.newCardHand(roundPlayer, betAmount));
-
         roundPlayerDao.save(roundPlayer);
+
+        roundPlayer.getRoundPlayerCardHandList().add(roundPlayerCardHandService.newCardHand(roundPlayer, betAmount));
 
         return roundPlayer;
     }

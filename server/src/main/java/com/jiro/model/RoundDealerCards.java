@@ -15,11 +15,14 @@ public class RoundDealerCards {
     private long roundCardListId;
 
     @ManyToOne
-    @JoinColumn(name = "round_id")
+    @JoinColumn(name = "roundId")
     private Round round;
 
-//    @Column(name = "round_id")
-//    private long round_id;
+//    @Column(name = "roundId")
+//    private long roundId;
+
+    @Column(name = "dealer_id")
+    private long dealerId;
 
     @Column(name = "card_symbol")
     private String cardSymbol;
@@ -40,12 +43,12 @@ public class RoundDealerCards {
         this.round = round;
     }
 
-//    public long getRound_id() {
-//        return round_id;
+//    public long getRoundId() {
+//        return roundId;
 //    }
-
-//    public void setRound_id(long round_id) {
-//        this.round_id = round_id;
+//
+//    public void setRoundId(long roundId) {
+//        this.roundId = roundId;
 //    }
 
     public String getCardSymbol() {
@@ -55,4 +58,25 @@ public class RoundDealerCards {
     public void setCardSymbol(String cardSymbol) {
         this.cardSymbol = cardSymbol;
     }
+
+    public long getDealerId() {
+        return dealerId;
+    }
+
+    public void setDealerId(long dealerId) {
+        this.dealerId = dealerId;
+    }
+
+    public RoundDealerCards() {}
+
+    public RoundDealerCards(Round round, String cardSymbol) {
+        this.round = round;
+        dealerId = round.getDealer().getId();
+        this.cardSymbol = cardSymbol;
+    }
+
+    public Card getAsCard() {
+        return new Card(cardSymbol);
+    }
+
 }
