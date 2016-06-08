@@ -7,8 +7,13 @@ import com.jiro.dao.AccountDao;
 import com.jiro.enums.AccountType;
 import com.jiro.model.Account;
 import com.jiro.service.AccountService;
+import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by dev-pc on 5/30/16.
@@ -84,5 +89,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void saveAccount(Account account) {
         accountDao.save(account);
+    }
+
+    @Override
+    public List<Account> findAll() {
+        List<Account> accountList = new ArrayList<>();
+        accountDao.findAll().forEach(accountList::add);
+
+        return accountList;
     }
 }

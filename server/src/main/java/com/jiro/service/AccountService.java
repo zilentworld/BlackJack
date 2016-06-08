@@ -5,6 +5,7 @@ import com.jiro.model.Account;
 import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * Created by dev-pc on 5/30/16.
@@ -24,4 +25,6 @@ public interface AccountService {
     Account findById(long accountId) throws RemoteException;
 
     void saveAccount(Account account);
+
+    List<Account> findAll();
 }

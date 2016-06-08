@@ -150,6 +150,8 @@ public class Account implements Serializable {
         this.gameList = gameList;
     }
 
+
+
     public Account() {
     }
 
@@ -160,5 +162,9 @@ public class Account implements Serializable {
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+    @Override
+    public String toString() {
+        return "Account: username:"+ username + ", password:"+ password;
     }
 }

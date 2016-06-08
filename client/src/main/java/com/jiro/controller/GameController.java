@@ -26,7 +26,9 @@ public class GameController {
     public String createPlayer(@RequestParam(required = true) long userId,
                                ModelMap model) {
 
-        return accountService.findById(userId).getUsername();
+        accountService.findById(userId);
+
+        return "test";
     }
 
 }
