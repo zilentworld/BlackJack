@@ -12,6 +12,9 @@ import java.io.File;
 public class Application {
 
     public static void main(String[] args) {
+        //TODO
+        //change with correlation and request - response
+        //google: spring boot jms request response
         // Clean out any ActiveMQ data from a previous run
         FileSystemUtils.deleteRecursively(new File("activemq-data"));
 
