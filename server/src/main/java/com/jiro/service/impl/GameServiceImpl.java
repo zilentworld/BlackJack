@@ -43,9 +43,9 @@ public class GameServiceImpl implements GameService {
         game.setGameDeck(gameDeck);
 
         gameDao.save(game);
+        roomService.saveRoom(room);
 
         roomService.addGame(room, game);
-        roomService.saveRoom(room);
 
         gameDeckService.saveGameDeck(gameDeck);
 

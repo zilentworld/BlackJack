@@ -7,8 +7,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
-import javax.jms.Destination;
-import javax.jms.MessageProducer;
+import javax.jms.*;
 import java.io.Serializable;
 import java.util.Random;
 
@@ -21,16 +20,40 @@ public class JmsHandlerServiceImpl implements JmsHandlerService {
     @Autowired
     private ConfigurableApplicationContext context;
 
-    public void sendJms(String dest, Serializable s) {
-        MessageCreator accountQuery = session -> session.createObjectMessage(s);
+    public String sendJms(String dest, String replyTo, Serializable s) {
+        String corrId = createRandomString();
+        MessageCreator accountQuery = session -> {
+            Message z = session.createObjectMessage(s);
+            z.setJMSCorrelationID(corrId);
+            z.setJMSReplyTo(session.createTopic(replyTo));
+            return z;
+        };
         JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
         jmsTemplate.send(dest, accountQuery);
+
+        return corrId;
     }
 
     @Override
-    public void convertSendJms(String dest, Object o) {
+    public String convertSendJms(String dest, String replyTo, Object o) {
+        String corrId = createRandomString();
+        /*MessageCreator accountQuery = session -> {
+            Message z = session.createMessage();
+            z.setJMSCorrelationID(corrId);
+            return z;
+        };
         JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
-        jmsTemplate.convertAndSend(dest, o);
+        jmsTemplate.convertAndSend(dest, o);*/
+
+        return corrId;
+    }
+
+    private String createRandomString() {
+        Random random = new Random(System.currentTimeMillis());
+        long randomLong = random.nextLong();
+        String zzz = Long.toHexString(randomLong);
+        System.out.println("rndm:"+zzz);
+        return zzz;
     }
 
 }

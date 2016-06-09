@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Component
 public interface JmsHandlerService {
 
-    void sendJms(String dest, Serializable s);
+    String sendJms(String dest, String replyTo, Serializable s);
 
-    void convertSendJms(String dest, Object o);
+    String convertSendJms(String dest, String replyTo, Object o);
 
 }

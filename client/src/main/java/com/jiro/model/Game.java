@@ -1,13 +1,14 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "game")
-public class Game {
-
+public class Game implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "game_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class Game {
     @JoinColumn(name = "dealer_id")
     private Account dealer;
 
-    @OneToOne(mappedBy = "game",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "game",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private GameDeck gameDeck;
 
     @Transient
@@ -30,7 +31,7 @@ public class Game {
     @Transient
     private Deck discardDeck;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Round> roundList;
 
     public long getGameId() {
@@ -50,6 +51,9 @@ public class Game {
     }
 
     public Deck getPlayDeck() {
+        if(playDeck == null)
+            playDeck = new Deck(gameDeck);
+
         return playDeck;
     }
 

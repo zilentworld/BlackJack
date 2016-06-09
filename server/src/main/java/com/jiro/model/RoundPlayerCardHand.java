@@ -3,6 +3,7 @@ package com.jiro.model;
 import com.jiro.enums.CardHandStatus;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "round_player_card_hand")
-public class RoundPlayerCardHand {
-
+public class RoundPlayerCardHand implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "roundCardHandId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class RoundPlayerCardHand {
     @Column(name = "card_hand_count")
     private int cardHandCount;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roundPlayerCardHand")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "roundPlayerCardHand")
     private List<RoundPlayerCards> roundPlayerCardsList;
 
     @Transient
@@ -125,7 +126,7 @@ public class RoundPlayerCardHand {
         sb.append("CardHand: " + getCardHand().toString() + "\n");
         sb.append("Card Value: " + getCardHandCount() + "\n");
         sb.append("Bet amount: " + betAmount + "\n");
-        sb.append("CardHandStatus: " + cardHandStatus);
+        sb.append("CardHandStatus: " + cardHandStatus + "\n");
 
         return sb.toString();
     }

@@ -3,8 +3,10 @@ package com.jiro.model;
 import com.jiro.enums.CardNumber;
 import com.jiro.enums.CardSuit;
 
-public class Card {
+import java.io.Serializable;
 
+public class Card implements Serializable {
+    private static final long serialVersionUID = 1L;
     private CardSuit cardSuit;
     private CardNumber cardNumber;
     private boolean isVisible;
@@ -34,8 +36,7 @@ public class Card {
         isVisible = visible;
     }
 
-    public Card() {
-    }
+    public Card() {}
 
     public Card(CardNumber cardNumber, CardSuit cardSuit) {
         this.cardNumber = cardNumber;
@@ -76,5 +77,13 @@ public class Card {
 
     public String toDbFormat() {
         return cardNumber.getSymbol() + "!" + cardSuit.getSymbol();
+    }
+
+    public int getSoftValue() {
+        return cardNumber.getSoftValue();
+    }
+
+    public int getHardValue() {
+        return cardNumber.getHardValue();
     }
 }

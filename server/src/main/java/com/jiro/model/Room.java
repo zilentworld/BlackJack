@@ -1,14 +1,15 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "room")
-public class Room {
-
+public class Room implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "room_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,7 @@ public class Room {
     @Transient
     private List<RoomPlayer> roomPlayersList;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Game> gameList;
 
     public Account getDealer() {

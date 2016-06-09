@@ -1,15 +1,15 @@
 package com.jiro.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by dev-pc on 5/30/16.
  */
 @Entity
 @Table(name = "room_player_list")
-public class RoomPlayer {
-
+public class RoomPlayer implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "room_list_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

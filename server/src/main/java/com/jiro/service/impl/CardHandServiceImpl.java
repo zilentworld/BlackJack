@@ -23,6 +23,7 @@ public class CardHandServiceImpl implements CardHandService {
     public Card addCard(CardHand cardHand, Deck deck, boolean isVisible) {
         Card c = deck.getCard(isVisible);
         cardHand.getCards().add(c);
+        System.out.println("addCard:c:"+c.toString());
         return c;
     }
 

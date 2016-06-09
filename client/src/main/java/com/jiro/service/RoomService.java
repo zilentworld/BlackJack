@@ -6,13 +6,13 @@ import com.jiro.model.Room;
 
 public interface RoomService {
 
-    Room createNewRoom (long dealerId);
+    Room createNewRoom(long dealerId);
 
-    Room createNewRoom (Account dealer);
+    Room createNewRoom(Account dealer);
 
-    void joinRoom (Room room, Account player);
+    void joinRoom(Room room, Account player);
 
-    void joinRoom (long roomId, long playerId);
+    void joinRoom(long roomId, long playerId);
 
     Room findById(long roomId);
 

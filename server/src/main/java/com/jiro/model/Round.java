@@ -1,6 +1,7 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "round")
-public class Round {
-
+public class Round implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "round_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +28,10 @@ public class Round {
     @Transient
     private CardHand dealerHand;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "round")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "round")
     private List<RoundPlayer> roundPlayerList;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "round")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "round")
     private List<RoundDealerCards> roundDealerCardsList;
 
     public long getRoundId() {
@@ -73,11 +74,13 @@ public class Round {
                 List<Card> cards = new ArrayList<>();
                 roundDealerCardsList.forEach(roundDealerCards -> cards.add(roundDealerCards.getAsCard()));
                 dealerHand = new CardHand(cards);
+                System.out.println("size > 0");
             } else {
                 dealerHand = new CardHand();
+                System.out.println("else");
             }
         }
-
+        System.out.println("dealerHand:"+dealerHand.toString());
         return dealerHand;
     }
 
@@ -106,7 +109,7 @@ public class Round {
         sb.append("Dealer: " + getDealerHand().toString() + "\n");
         sb.append("Dealer Card Value: " + getDealerHand().getHandValue() + "\n");
         sb.append("\n");
-        sb.append("Players:" + "\n");
+        sb.append("Players:" + roundPlayerList.size() + "\n");
         roundPlayerList.forEach(roundPlayer -> sb.append(roundPlayer.toString() + "\n"));
 
         return sb.toString();

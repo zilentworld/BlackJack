@@ -1,14 +1,15 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by dev-pc on 5/31/16.
  */
 @Entity
 @Table(name = "game_deck")
-public class GameDeck {
-
+public class GameDeck implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "deck_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

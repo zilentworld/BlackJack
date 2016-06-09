@@ -12,6 +12,7 @@ import java.io.File;
 public class Application {
 
     public static void main(String[] args) {
+
         //TODO
         //change with correlation and request - response
         //google: spring boot jms request response
@@ -19,6 +20,6 @@ public class Application {
         FileSystemUtils.deleteRecursively(new File("activemq-data"));
 
         SpringApplication.run(Application.class, args);
-
     }
 }
+

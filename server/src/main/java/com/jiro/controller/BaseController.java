@@ -10,12 +10,12 @@ import java.util.Map;
  */
 @Controller
 public class BaseController {
-
-    @RequestMapping("/")
-    public String index(Map<String, Object> model) {
-        System.out.println("index");
-        model.put("message", "ASOFJAOSFJAS");
-        return "index";
-    }
+//
+//    @RequestMapping("/")
+//    public String index(Map<String, Object> model) {
+//        System.out.println("index");
+//        model.put("message", "ASOFJAOSFJAS");
+//        return "index";
+//    }
 
 }

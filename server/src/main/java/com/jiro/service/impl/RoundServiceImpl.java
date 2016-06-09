@@ -155,18 +155,22 @@ public class RoundServiceImpl implements RoundService {
 
     @Override
     public void finishDealerHand(long roundId) {
+        System.out.println("FinishDealerHand:roundId:"+roundId);
         Round round = roundDao.findOne(roundId);
+        System.out.println("found round");
         CardHand cardHand = round.getDealerHand();
         cardHand.getCards().forEach(card -> card.setVisible(true));
         while (cardHand.getHandValue() < 17) {
             roundDealerCardsService.addDealerCard(
-                    round, cardHandService.addCard(cardHand, round.getGame().getPlayDeck(), true)
+                    round, cardHandService.addCard(cardHand,
+                            round.getGame().getPlayDeck(), true)
             );
         }
     }
 
     @Override
     public void finishRound(long roundId) {
+        System.out.println("finish round");
         Round round = roundDao.findOne(roundId);
         round.getRoundPlayerList().forEach(roundPlayer ->
                 roundPlayer.getRoundPlayerCardHandList().forEach(
@@ -176,6 +180,7 @@ public class RoundServiceImpl implements RoundService {
     }
 
     private void updateWinLoss(RoundPlayerCardHand roundPlayerCardHand, Round round) {
+        System.out.println("Update winloss");
         Account player = roundPlayerCardHand.getRoundPlayer().getPlayer();
         int betAmount = roundPlayerCardHand.getBetAmount();
         int chipsEarned;
@@ -234,5 +239,10 @@ public class RoundServiceImpl implements RoundService {
 
         roundPlayerCardsService.saveRoundPlayerCardHand(roundPlayerCardHand);
         return winType;
+    }
+
+    @Override
+    public List<Round> getDealerRounds(long dealerId) {
+        return roundDao.findByDealerId(dealerId);
     }
 }

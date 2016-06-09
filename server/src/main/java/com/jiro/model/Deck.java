@@ -3,10 +3,11 @@ package com.jiro.model;
 import com.jiro.enums.CardNumber;
 import com.jiro.enums.CardSuit;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Deck {
-
+public class Deck implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Game game;
     private int deckSize;
     private List<Card> cardList;

@@ -1,6 +1,7 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "round_player")
-public class RoundPlayer {
-
+public class RoundPlayer implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "round_player_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +25,7 @@ public class RoundPlayer {
     @JoinColumn(name = "player_id")
     private Account player;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roundPlayer")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "roundPlayer")
     private List<RoundPlayerCardHand> roundPlayerCardHandList;
 
     public long getRoundListId() {

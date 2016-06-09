@@ -10,20 +10,24 @@ import com.jiro.model.Round;
  */
 public interface RoundService {
 
-    Round createNewRound (long gameId);
+    Round createNewRound(long gameId);
 
-    Round createNewRound (Game game);
+    Round createNewRound(Game game);
 
-    void startRound (long roundId);
+    void startRound(long roundId);
 
     void distributeInitialCards(Round round);
 
-    boolean joinRound (Round round, Account player, int initialBet);
+    boolean joinRound(Round round, Account player, int initialBet);
 
-    boolean joinRound (long roundId, long playerId, int initialBet);
+    boolean joinRound(long roundId, long playerId, int initialBet);
 
-    Round findById (long roundId);
+    Round findById(long roundId);
 
     void givePlayerCards(Round round, Deck playDeck);
+
+    void finishDealerHand(long roundId);
+
+    void finishRound(long roundId);
 
 }

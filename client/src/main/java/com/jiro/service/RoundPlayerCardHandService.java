@@ -14,6 +14,12 @@ public interface RoundPlayerCardHandService {
 
     void playDouble(long roundPlayerCardHandId);
 
+    void playHit(long roundPlayerCardHandId);
+
+    void playStand(long roundPlayerCardHandId);
+
     RoundPlayerCardHand newCardHand(RoundPlayer roundPlayer, int betAmount);
+
+    void updateCardHandStatus(RoundPlayerCardHand roundPlayerCardHand);
 
 }

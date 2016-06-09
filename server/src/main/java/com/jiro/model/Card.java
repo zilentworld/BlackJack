@@ -3,8 +3,10 @@ package com.jiro.model;
 import com.jiro.enums.CardNumber;
 import com.jiro.enums.CardSuit;
 
-public class Card {
+import java.io.Serializable;
 
+public class Card implements Serializable {
+    private static final long serialVersionUID = 1L;
     private CardSuit cardSuit;
     private CardNumber cardNumber;
     private boolean isVisible;

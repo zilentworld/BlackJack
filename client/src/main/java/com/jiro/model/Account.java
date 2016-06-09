@@ -13,6 +13,8 @@ import java.util.List;
 @Table(name = "account")
 public class Account implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,19 +41,19 @@ public class Account implements Serializable {
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isAdmin;
 
-    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Room> roomList;
 
-    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Round> roundList;
 
-    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Game> gameList;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RoomPlayer> roomPlayersList;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RoundPlayer> roundPlayerList;
 
     public long getId() {
@@ -150,6 +152,8 @@ public class Account implements Serializable {
         this.gameList = gameList;
     }
 
+
+
     public Account() {
     }
 
@@ -160,5 +164,9 @@ public class Account implements Serializable {
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+    @Override
+    public String toString() {
+        return "Account: username:"+ username + ", password:"+ password;
     }
 }

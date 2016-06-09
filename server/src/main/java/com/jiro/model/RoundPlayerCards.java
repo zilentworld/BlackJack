@@ -1,14 +1,15 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by dev-pc on 5/30/16.
  */
 @Entity
 @Table(name = "round_player_cards")
-public class RoundPlayerCards {
-
+public class RoundPlayerCards implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "round_card_list_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

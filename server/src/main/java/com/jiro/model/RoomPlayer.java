@@ -1,6 +1,7 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,8 +9,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "room_player_list")
-public class RoomPlayer {
-
+public class RoomPlayer implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "room_list_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

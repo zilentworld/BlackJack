@@ -11,13 +11,59 @@
     <context:component-scan base-package="com.jiro"/>
 
 
-    <bean id="gameController" class="com.jiro.controller.GameController">
-        <property name="accountService" ref="accountService"/>
-    </bean>
+    <!--<bean id="viewResolver"-->
+          <!--class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix">-->
+            <!--<value>/WEB-INF/jsp2/</value>-->
+        <!--</property>-->
+        <!--<property name="suffix">-->
+            <!--<value>.jsp</value>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <bean id="accountService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
         <property name="serviceUrl" value="rmi://localhost:1199/AccountService"/>
         <property name="serviceInterface" value="com.jiro.service.AccountService"/>
+    </bean>
+    <bean id="cardHandService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/CardHandService"/>
+        <property name="serviceInterface" value="com.jiro.service.CardHandService"/>
+    </bean>
+    <bean id="gameDeckService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/GameDeckService"/>
+        <property name="serviceInterface" value="com.jiro.service.GameDeckService"/>
+    </bean>
+    <bean id="gameService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/GameService"/>
+        <property name="serviceInterface" value="com.jiro.service.GameService"/>
+    </bean>
+    <bean id="roomPlayerService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/RoomPlayerService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoomPlayerService"/>
+    </bean>
+    <bean id="roomService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/RoomService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoomService"/>
+    </bean>
+    <bean id="roundDealerCardsService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/RoundDealerCardsService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundDealerCardsService"/>
+    </bean>
+    <bean id="roundPlayerCardHandService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/RoundPlayerCardHandService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundPlayerCardHandService"/>
+    </bean>
+    <bean id="roundPlayerCardsService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/RoundPlayerCardsService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundPlayerCardsService"/>
+    </bean>
+    <bean id="roundPlayerService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/RoundPlayerService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundPlayerService"/>
+    </bean>
+    <bean id="roundService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="rmi://localhost:1199/RoundService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundService"/>
     </bean>
 
 

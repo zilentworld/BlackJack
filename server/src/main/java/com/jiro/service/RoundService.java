@@ -5,6 +5,8 @@ import com.jiro.model.Deck;
 import com.jiro.model.Game;
 import com.jiro.model.Round;
 
+import java.util.List;
+
 /**
  * Created by dev-pc on 5/30/16.
  */
@@ -29,5 +31,7 @@ public interface RoundService {
     void finishDealerHand(long roundId);
 
     void finishRound(long roundId);
+
+    List<Round> getDealerRounds(long dealerId);
 
 }

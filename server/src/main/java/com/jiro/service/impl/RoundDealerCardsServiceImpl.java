@@ -26,6 +26,6 @@ public class RoundDealerCardsServiceImpl implements RoundDealerCardsService {
 
     @Override
     public void addDealerCard(Round round, Card card) {
-        roundDealerCardsDao.save(new RoundDealerCards(round, card.toString()));
+        roundDealerCardsDao.save(new RoundDealerCards(round, card.toDbFormat()));
     }
 }

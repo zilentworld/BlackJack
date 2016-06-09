@@ -2,14 +2,15 @@ package com.jiro.model;
 
 import com.jiro.enums.CardHandStatus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by dev-pc on 5/27/16.
  */
-public class CardHand {
-
+public class CardHand implements Serializable {
+    private static final long serialVersionUID = 1L;
     private CardHandStatus cardHandStatus;
     private List<Card> cards;
 
@@ -51,9 +52,9 @@ public class CardHand {
     public String toDbFormat() {
         StringBuilder sb = new StringBuilder();
         int a = 0;
-        for (Card card : cards) {
+        for (Card card : getCards()) {
             sb.append(card.toDbFormat());
-            if (a++ < cards.size() - 1)
+            if (a++ < getCards().size() - 1)
                 sb.append(":");
         }
 
@@ -62,7 +63,7 @@ public class CardHand {
 
     public int getSoftValue() {
         int softValue = 0;
-        for (Card card : cards) {
+        for (Card card : getCards()) {
             softValue += card.getSoftValue();
         }
 
@@ -71,7 +72,7 @@ public class CardHand {
 
     public int getHardValue() {
         int softValue = 0;
-        for (Card card : cards) {
+        for (Card card : getCards()) {
             softValue += card.getHardValue();
         }
 

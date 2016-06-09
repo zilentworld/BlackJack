@@ -1,5 +1,6 @@
 package com.jiro.service;
 
+import com.jiro.model.Card;
 import com.jiro.model.CardHand;
 import com.jiro.model.Deck;
 
@@ -8,5 +9,6 @@ import com.jiro.model.Deck;
  */
 public interface CardHandService {
 
-    void addCard(CardHand cardHand, Deck deck, boolean isVisible);
+    Card addCard(CardHand cardHand, Deck deck, boolean isVisible);
+
 }

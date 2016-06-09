@@ -75,8 +75,10 @@ public class RoundPlayerCardHandServiceImpl implements RoundPlayerCardHandServic
 
     @Override
     public void playStand(long roundPlayerCardHandId) {
+        System.out.println("playStand:"+roundPlayerCardHandId);
         RoundPlayerCardHand r = findById(roundPlayerCardHandId);
         r.setCardHandStatus(CardHandStatus.WAITING);
+        roundPlayerCardsService.saveRoundPlayerCardHand(r);
     }
 
     @Override

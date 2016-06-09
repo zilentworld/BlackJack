@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by dev-pc on 6/8/16.
+ * Created by dev-pc on 6/9/16.
  */
 @Component
-public class AccountReceiver extends Receiver {
+public class DealerReceiver extends Receiver {
 
     public String getStringResult(String corrId) {
         return (String) getObject(corrId);
@@ -21,10 +21,10 @@ public class AccountReceiver extends Receiver {
         return (List<String>) getObject(corrId);
     }
 
-    @JmsListener(destination = "account-destination")
-    public void receiveMessage(Map<String, List<String>> accountString) {
-        System.out.println("jmsclient:account-destination");
-        System.out.println(accountString);
-        getResultMap().putAll(accountString);
+    @JmsListener(destination = "dealer-destination")
+    public void receiveMessage(Map<String, List<String>> dealerString) {
+        System.out.println("jmsclient:dealer-destination");
+        System.out.println(dealerString);
+        getResultMap().putAll(dealerString);
     }
 }

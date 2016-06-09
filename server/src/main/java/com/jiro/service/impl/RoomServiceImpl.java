@@ -8,6 +8,7 @@ import com.jiro.model.Room;
 import com.jiro.service.AccountService;
 import com.jiro.service.RoomPlayerService;
 import com.jiro.service.RoomService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +80,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void addGame(Room room, Game game) {
+        Hibernate.initialize(room.getGameList());
         room.getGameList().add(game);
     }
 

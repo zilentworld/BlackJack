@@ -23,6 +23,7 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="com.jiro"/>
+    <context:component-scan base-package="com.jiro.service"/>
 
 
     <!--abstract="false"-->
@@ -54,6 +55,16 @@
     <context:component-scan base-package="com.jiro" />
     <!--<mvc:annotation-driven />-->
     <bean name="accountService" class="com.jiro.service.impl.AccountServiceImpl" />
+    <bean name="cardHandService" class="com.jiro.service.impl.CardHandServiceImpl" />
+    <bean name="gameDeckService" class="com.jiro.service.impl.GameDeckServiceImpl" />
+    <bean name="gameService" class="com.jiro.service.impl.GameServiceImpl" />
+    <bean name="roomPlayerService" class="com.jiro.service.impl.RoomPlayerServiceImpl" />
+    <bean name="roomService" class="com.jiro.service.impl.RoomServiceImpl" />
+    <bean name="roundDealerCardsService" class="com.jiro.service.impl.RoundDealerCardsServiceImpl" />
+    <bean name="roundPlayerCardHandService" class="com.jiro.service.impl.RoundPlayerCardHandServiceImpl" />
+    <bean name="roundPlayerCardsService" class="com.jiro.service.impl.RoundPlayerCardsServiceImpl" />
+    <bean name="roundPlayerService" class="com.jiro.service.impl.RoundPlayerServiceImpl" />
+    <bean name="roundService" class="com.jiro.service.impl.RoundServiceImpl" />
 
     <!--<bean name="orderExporter"-->
           <!--class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">-->
@@ -76,6 +87,83 @@
         <property name="serviceName" value="AccountService"/>
         <property name="service" ref="accountService"/>
         <property name="serviceInterface" value="com.jiro.service.AccountService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="CardHandService"/>
+        <property name="service" ref="cardHandService"/>
+        <property name="serviceInterface" value="com.jiro.service.CardHandService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="GameDeckService"/>
+        <property name="service" ref="gameDeckService"/>
+        <property name="serviceInterface" value="com.jiro.service.GameDeckService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="GameService"/>
+        <property name="service" ref="gameService"/>
+        <property name="serviceInterface" value="com.jiro.service.GameService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="RoomPlayerService"/>
+        <property name="service" ref="roomPlayerService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoomPlayerService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="RoomService"/>
+        <property name="service" ref="roomService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoomService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="RoundDealerCardsService"/>
+        <property name="service" ref="roundDealerCardsService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundDealerCardsService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="RoundDealerCardsService"/>
+        <property name="service" ref="roundDealerCardsService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundDealerCardsService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="RoundPlayerCardHandService"/>
+        <property name="service" ref="roundPlayerCardHandService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundPlayerCardHandService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="RoundPlayerCardsService"/>
+        <property name="service" ref="roundPlayerCardsService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundPlayerCardsService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="RoundPlayerService"/>
+        <property name="service" ref="roundPlayerService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundPlayerService"/>
+        <!-- defaults to 1099 -->
+        <property name="registryPort" value="1199"/>
+    </bean>
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="RoundService"/>
+        <property name="service" ref="roundService"/>
+        <property name="serviceInterface" value="com.jiro.service.RoundService"/>
         <!-- defaults to 1099 -->
         <property name="registryPort" value="1199"/>
     </bean>

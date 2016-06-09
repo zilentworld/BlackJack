@@ -1,14 +1,15 @@
 package com.jiro.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by dev-pc on 5/30/16.
  */
 @Entity
 @Table(name = "round_dealer_cards")
-public class RoundDealerCards {
-
+public class RoundDealerCards implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "round_card_list_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,7 +77,9 @@ public class RoundDealerCards {
     }
 
     public Card getAsCard() {
-        return new Card(cardSymbol);
+        System.out.println(cardSymbol);
+        Card c = new Card(cardSymbol);
+        System.out.println("roundDealerCards:"+c.toString());
+        return c;
     }
-
 }
